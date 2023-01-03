@@ -1,0 +1,27 @@
+name: Atlas
+main: ru.nightmirror.atlas.Atlas
+version: 1.0
+author: NightMirror
+description: Manager of markers and territories
+api-version: 1.16
+commands:
+  atlas:
+    aliases: [atl]
+    usage: /atlas help
+  territory:
+    aliases: [tr]
+    usage: /territory help
+  marker:
+    aliases: [mark]
+    usage: /marker help
+permissions:
+  atlas.reload:
+    default: op
+  territory.player:
+    default: op
+  territory.admin:
+    default: op
+  marker.player:
+    default: op
+  marker.admin:
+    default: op
