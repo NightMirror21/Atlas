@@ -13,10 +13,10 @@ public interface ITerritoryManager extends Manager {
     boolean createNew(Player player);
     boolean editName(Player player, UUID id);
     boolean editDescription(Player player, UUID id);
-    boolean isOwner(Player player, UUID id);
+    boolean isOwner(UUID playerUUID, UUID id);
     boolean cancel(Player player);
     boolean isExists(UUID id);
-    int countOfTerritories(Player player);
+    int countOfTerritories(UUID playerUUID);
     @Nullable Territory getTerritory(UUID id);
     Set<Territory> getTerritories(UUID ownerUUID);
     Set<Territory> getTerritories();
