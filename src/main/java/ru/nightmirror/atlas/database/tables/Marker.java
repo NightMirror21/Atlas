@@ -28,4 +28,8 @@ public class Marker {
 
     @DatabaseField(columnName = "updated_at")
     private Long updatedAt;
+
+    public boolean isReadyToCreate() {
+        return ownerUUID != null && name != null && description != null;
+    }
 }

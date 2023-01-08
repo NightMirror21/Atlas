@@ -6,6 +6,6 @@ import ru.nightmirror.atlas.database.tables.Territory;
 
 public interface IDatabaseLoader {
     boolean isConnected();
-    Dao<Territory, String> loadTerritoriesTable();
-    Dao<Marker, String> loadMarkersTable();
+    Dao<Territory, String> getTerritoriesTable();
+    Dao<Marker, String> getMarkersTable();
 }
