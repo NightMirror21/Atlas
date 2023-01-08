@@ -1,8 +1,8 @@
 package ru.nightmirror.atlas;
 
 import org.junit.jupiter.api.Test;
-import ru.nightmirror.atlas.intersection.IntersectionChecker;
-import ru.nightmirror.atlas.intersection.exceptions.InvalidAreaException;
+import ru.nightmirror.atlas.interfaces.intersection.IntersectionChecker;
+import ru.nightmirror.atlas.interfaces.intersection.exceptions.InvalidAreaException;
 import ru.nightmirror.atlas.models.Area;
 import ru.nightmirror.atlas.models.Line;
 import ru.nightmirror.atlas.models.Point;

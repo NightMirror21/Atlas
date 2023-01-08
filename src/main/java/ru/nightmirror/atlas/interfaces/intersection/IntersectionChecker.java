@@ -1,6 +1,6 @@
-package ru.nightmirror.atlas.intersection;
+package ru.nightmirror.atlas.interfaces.intersection;
 
-import ru.nightmirror.atlas.intersection.exceptions.InvalidAreaException;
+import ru.nightmirror.atlas.interfaces.intersection.exceptions.InvalidAreaException;
 import ru.nightmirror.atlas.models.Area;
 import ru.nightmirror.atlas.models.Line;
 import ru.nightmirror.atlas.models.Point;

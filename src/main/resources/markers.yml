@@ -26,6 +26,7 @@ messages:
 
   write-name: '&a[Atlas] &fWrite to chat name of marker'
   write-description: '&a[Atlas] &fWrite to chat description of marker'
+  mark-point: '&a[Atlas] Left click to set marker location'
 
   created-successfully: '&a[Atlas] &fMarker created'
   edited-successfully: '&a[Atlas] &fMarker edited'

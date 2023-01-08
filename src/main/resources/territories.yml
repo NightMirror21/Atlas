@@ -32,7 +32,7 @@ messages:
 
   write-name: '&a[Atlas] &fWrite to chat name of territory'
   write-description: '&a[Atlas] &fWrite to chat description of territory'
-  mark-points: '&a[Atlas] Mark points of your territory'
+  mark-points: '&a[Atlas] Mark points of your territory by left click'
   point-marked: '&7#%number% &fmarked'
   point-remove-button: '&7Click here to delete this point'
   point-remove-button-hover: '&7Delete'
