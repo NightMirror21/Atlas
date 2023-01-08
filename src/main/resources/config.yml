@@ -1,0 +1,32 @@
+database:
+  type: 'sqlite'
+
+  # If not sqlite or h2
+  address: 'localhost:3030'
+  name: 'minecraft'
+
+  # If using user and password
+  use-user-and-password: false
+  user: 'user'
+  password: 'qwerty123'
+
+messages:
+  plugin-reloaded-success: '&a[Atlas] &fPlugin reloaded successful!'
+  plugin-reloaded-not-success: '&e[Atlas] &fPlugin reloaded not successful. He will be stopped'
+  not-permission: '&c[Atlas] &fYou do not have permission!'
+
+  help:
+    - '&a[Atlas] &fv.%plugins_version%'
+    - '/atlas reload &7- reload plugin'
+    - '/atlas stats &7- plugin statistics'
+    - '/marker help &7- help for markers'
+    - '&7/mark - shortcut for /mark'
+    - '/territory help &7- help for territories'
+    - '&7/tr - shortcut for /territory'
+    - '/atlas help &7- help for atlas'
+    - '&7/atl - shortcut for /atlas'
+
+  stats:
+    - '&a[Atlas] &fStatistics'
+    - '&a%territories_count% &fterritories'
+    - '&a%markers_count% &fmarkers'

@@ -1,0 +1,71 @@
+settings:
+  maximum-per-player: 2
+  min-symbols-name-length: 3
+  max-symbols-name-length: 20
+  min-symbols-description-length: 10
+  max-symbols-description-length: 100
+
+messages:
+  errors:
+    name-is-too-short: '&e[Atlas] &fName of marker is too short'
+    name-is-too-long: '&e[Atlas] &fName of marker is too long'
+    description-is-too-short: '&e[Atlas] &fDescription of marker is too short'
+    description-is-too-long: '&e[Atlas] &fDescription of marker is too long'
+    marker-not-exist: '&e[Atlas] &fMarker not exist'
+    marker-not-your: '&e[Atlas] &fThis marker is not your'
+    limit-is-reached: '&e[Atlas] &fYou can not create more than 2 markers'
+    no-to-cancel: '&e[Atlas] &fAt the moment you are not doing anything'
+
+  help:
+    - '&a[Atlas] Markers help'
+    - '/marker create &7- create marker'
+    - '/marker list own/all/[nickname]&7- list of markers'
+    - '/marker info [id]&7- info about marker'
+    - '/marker remove [id] &7- remove marker with id'
+    - '/marker edit [id] name/desc &7- edit name or description of marker with id'
+
+  write-name: '&a[Atlas] &fWrite to chat name of marker'
+  write-description: '&a[Atlas] &fWrite to chat description of marker'
+
+  created-successfully: '&a[Atlas] &fMarker created'
+  edited-successfully: '&a[Atlas] &fMarker edited'
+  removed-successfully: '&a[Atlas] &fMarker removed'
+
+  cancel-button: '&a[Atlas] &7To cancel click here'
+  cancel-button-hover: 'Cancel'
+  cancelled-response: '&a[Atlas] &fCancelled'
+
+  list-max-on-page: 4
+  list-header: '&a[Atlas] List of markers'
+
+  # %marker_name%; %marker_description%; %marker_owner%; %marker_updated%; %marker_created%
+  list-item: '&a- &f%marker_name% &7(%marker_owner%)'
+
+  list-more-button: '&7[More]'
+  list-more-button-hover: 'Click here to get more info'
+
+  list-previous-page-button: '&7[Back]'
+  list-previous-page-button-hover: 'Go to previous page'
+
+  list-next-page-button: '&7[Next]'
+  list-next-page-button-hover: 'Go to next page'
+
+  list-page-buttons-separator: ' &f- &7%current_page%/%max_pages% &f- '
+
+  # %marker_name%; %marker_description%; %marker_owner%; %marker_updated%; %marker_created%
+  info:
+    - '&a[Atlas] %marker_name%'
+    - '&a- &fCreated by %marker_owner%'
+    - '&a- &fCreated at %marker_created%'
+    - '&a- &fUpdated at %marker_updated%'
+    - '&a- &fDescription: %marker_description%'
+
+  info-id-copy-button: '&7[Copy ID]'
+  info-id-copy-button-hover: 'ID will be copied to your buffer'
+
+  remove-button: '&7[Remove]'
+  remove-button-hover: 'Click here to remove marker'
+
+
+
+

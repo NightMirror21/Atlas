@@ -1,0 +1,80 @@
+settings:
+  maximum-per-player: 1
+  min-symbols-name-length: 3
+  max-symbols-name-length: 20
+  min-symbols-description-length: 10
+  max-symbols-description-length: 100
+  can-intersect-other-territories: false
+
+
+messages:
+  errors:
+    name-is-too-short: '&e[Atlas] &fName of territory is too short'
+    name-is-too-long: '&e[Atlas] &fName of territory is too long'
+    description-is-too-short: '&e[Atlas] &fDescription of territory is too short'
+    description-is-too-long: '&e[Atlas] &fDescription of territory is too long'
+    marker-not-exist: '&e[Atlas] &fTerritory not exist'
+    marker-not-your: '&e[Atlas] &fThis territory is not your'
+    limit-is-reached: '&e[Atlas] &fYou can not create more than 1 territory'
+    no-to-cancel: '&e[Atlas] &fAt the moment you are not doing anything'
+    no-points-to-remove: '&e[Atlas] &fThis point no longer exists'
+    territory-intersect: '&e[Atlas] &fTerritory is intersecting with other'
+    points-in-different-world: '&e[Atlas] &fPoints of territories in different world'
+    too-few-points: '&e[Atlas] &fToo few points. Mark 2 or more'
+
+  help:
+    - '&a[Atlas] Territories help'
+    - '/territory create &7- create territory'
+    - '/territory list own/all/[nickname]&7- list of territories'
+    - '/territory info [id]&7- info about territory'
+    - '/territory remove [id] &7- remove territory with id'
+    - '/territory edit [id] name/desc &7- edit name or description of territory with id'
+
+  write-name: '&a[Atlas] &fWrite to chat name of territory'
+  write-description: '&a[Atlas] &fWrite to chat description of territory'
+  mark-points: '&a[Atlas] Mark points of your territory'
+  point-marked: '&7#%number% &fmarked'
+  point-remove-button: '&7Click here to delete this point'
+  point-remove-button-hover: '&7Delete'
+  point-removed-response: '&a[Atlas] &fDeleted'
+
+  created-successfully: '&a[Atlas] &fTerritory created'
+  edited-successfully: '&a[Atlas] &fTerritory edited'
+  removed-successfully: '&a[Atlas] &fTerritory removed'
+
+  cancel-button: '&a[Atlas] &7To cancel click here'
+  cancel-button-hover: 'Cancel'
+  cancelled-response: '&a[Atlas] &fCancelled'
+
+  list-max-on-page: 4
+  list-header: '&a[Atlas] List of territories'
+
+  # %territory_name%; %territory_description%; %territory_owner%; %territory_updated%; %territory_created%; %territory_point%
+  list-item: '&a- &f%territory_name% &7(%territory_owner%)'
+  territory-point-format: '[world: %world_name%; x: %x%; y: %y%]'
+
+  list-more-button: '&7[More]'
+  list-more-button-hover: 'Click here to get more info'
+
+  list-previous-page-button: '&7[Back]'
+  list-previous-page-button-hover: 'Go to previous page'
+
+  list-next-page-button: '&7[Next]'
+  list-next-page-button-hover: 'Go to next page'
+
+  list-page-buttons-separator: ' &f- &7%current_page%/%max_pages% &f- '
+
+  # %territory_name%; %territory_description%; %territory_owner%; %territory_updated%; %territory_created%; %territory_point%
+  info:
+    - '&a[Atlas] %territory_name%'
+    - '&a- &fCreated by %territory_owner%'
+    - '&a- &fCreated at %territory_created%'
+    - '&a- &fUpdated at %territory_updated%'
+    - '&a- &fPoint %territory_point%'
+    - '&a- &fDescription: %marker_description%'
+
+  info-id-copy-button: '&7[Copy ID]'
+  info-id-copy-button-hover: 'ID will be copied to your buffer'
+
+  remove-button: '&7[Remove]'
+  remove-button-hover: 'Click here to remove marker'
