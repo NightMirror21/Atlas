@@ -15,7 +15,7 @@ commands:
     aliases: [mark]
     usage: /marker help
 permissions:
-  atlas.reload:
+  atlas.admin:
     default: op
   territory.player:
     default: op

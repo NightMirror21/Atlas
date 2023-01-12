@@ -12,8 +12,10 @@ database:
 
 messages:
   plugin-reloaded-success: '&a[Atlas] &fPlugin reloaded successful!'
-  plugin-reloaded-not-success: '&e[Atlas] &fPlugin reloaded not successful. He will be stopped'
+  plugin-reloaded-not-success: '&c[Atlas] &fPlugin reloaded not successful. He will be stopped'
   not-permission: '&c[Atlas] &fYou do not have permission!'
+  only-for-players: '[Atlas] This command only for players'
+  not-a-number: '&e[Atlas] &f%value% is not number!'
 
   help:
     - '&a[Atlas] &fv.%plugins_version%'
@@ -30,3 +32,6 @@ messages:
     - '&a[Atlas] &fStatistics'
     - '&a%territories_count% &fterritories'
     - '&a%markers_count% &fmarkers'
+
+
+is-debug-enabled: false

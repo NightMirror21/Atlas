@@ -71,6 +71,12 @@ public class DatabaseLoader implements Database {
     }
 
     @Override
+    public boolean reload() {
+        close();
+        return connect();
+    }
+
+    @Override
     public boolean isConnected() {
         return connection != null;
     }
