@@ -2,25 +2,33 @@ package ru.nightmirror.atlas.managers;
 
 import com.j256.ormlite.dao.Dao;
 import org.bukkit.entity.Player;
+import ru.nightmirror.atlas.commands.BaseMessages;
 import ru.nightmirror.atlas.database.DatabaseLoader;
 import ru.nightmirror.atlas.database.tables.Marker;
+import ru.nightmirror.atlas.interfaces.config.IConfigContainer;
 import ru.nightmirror.atlas.interfaces.controllers.IPlayerController;
 import ru.nightmirror.atlas.interfaces.managers.IMarkersManager;
 import ru.nightmirror.atlas.interfaces.managers.Manager;
 import ru.nightmirror.atlas.misc.Logging;
 
 import javax.annotation.Nullable;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
-public class MarkersManager implements IMarkersManager {
+public class MarkersManager extends BaseMessages implements IMarkersManager {
 
+    private final IConfigContainer configContainer;
     private final DatabaseLoader loader;
     private final IPlayerController controller;
     private Dao<Marker, String> data;
 
-    public MarkersManager(DatabaseLoader loader, IPlayerController controller) {
+    private final HashMap<UUID, Marker> processing = new HashMap<>();
+
+    public MarkersManager(IConfigContainer configContainer, DatabaseLoader loader, IPlayerController controller) {
+        super(configContainer.getBase());
+        this.configContainer = configContainer;
         this.loader = loader;
         this.controller = controller;
         load();
@@ -33,12 +41,18 @@ public class MarkersManager implements IMarkersManager {
 
     @Override
     public boolean createNew(Player player) {
+
+        return true;
+    }
+
+    @Override
+    public boolean editName(Player player, UUID id) {
         // TODO
         return false;
     }
 
     @Override
-    public boolean editName(Player player, UUID id) {
+    public boolean remove(UUID id) {
         // TODO
         return false;
     }
@@ -57,9 +71,15 @@ public class MarkersManager implements IMarkersManager {
 
     @Override
     public boolean cancel(Player player) {
-        boolean contains = controller.containsAnyCallback(player.getUniqueId());
+        boolean contains = controller.containsAnyCallback(player.getUniqueId()) || processing.containsKey(player.getUniqueId());
+        processing.remove(player.getUniqueId());
         controller.removeAllCallbacks(player.getUniqueId());
         return contains;
+    }
+
+    @Override
+    public boolean isProcessing(UUID uuid) {
+        return processing.containsKey(uuid) || controller.containsAnyCallback(uuid);
     }
 
     @Override
@@ -127,6 +147,7 @@ public class MarkersManager implements IMarkersManager {
 
     @Override
     public void stop() {
+        processing.clear();
         data.clearObjectCache();
         data = null;
         Logging.debug(this, "Stopped");

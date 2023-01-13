@@ -12,9 +12,11 @@ messages:
     description-is-too-short: '&e[Atlas] &fDescription of marker is too short'
     description-is-too-long: '&e[Atlas] &fDescription of marker is too long'
     marker-not-exist: '&e[Atlas] &fMarker not exist'
+    no-have-markers: '&e[Atlas] &fYou do not have markers'
     marker-not-your: '&e[Atlas] &fThis marker is not your'
     limit-is-reached: '&e[Atlas] &fYou can not create more than 2 markers'
     no-to-cancel: '&e[Atlas] &fAt the moment you are not doing anything'
+    already-running-cancel-offer: '&e[Atlas] &fAt the moment you are already creating a marker. Do you want to cancel?'
 
   help:
     - '&a[Atlas] Markers help'
@@ -36,8 +38,8 @@ messages:
   cancel-button-hover: 'Cancel'
   cancelled-response: '&a[Atlas] &fCancelled'
 
-  list-max-on-page: 4
-  list-header: '&a[Atlas] List of markers'
+  list-header: '&a[Atlas] &fList of markers'
+  list-is-empty: '&a[Atlas] &fList of markers is empty'
 
   # %marker_name%; %marker_description%; %marker_owner%; %marker_updated%; %marker_created%
   list-item: '&a- &f%marker_name% &7(%marker_owner%)'

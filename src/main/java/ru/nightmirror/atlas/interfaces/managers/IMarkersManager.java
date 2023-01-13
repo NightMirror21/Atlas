@@ -12,10 +12,12 @@ public interface IMarkersManager extends Manager {
     IPlayerController getPlayerController();
     boolean createNew(Player player);
     boolean editName(Player player, UUID id);
+    boolean remove(UUID id);
     boolean editDescription(Player player, UUID id);
     boolean isOwner(UUID playerUUID, UUID id);
-    boolean cancel(Player player);
+    boolean cancel(Player playerUUID);
     boolean isExists(UUID id);
+    boolean isProcessing(UUID uuid);
     int countOfMarkers(UUID playerUUID);
     @Nullable Marker getMarker(UUID id);
     Set<Marker> getMarkers(UUID ownerUUID);

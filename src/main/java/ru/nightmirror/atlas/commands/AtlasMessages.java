@@ -9,12 +9,12 @@ import ru.nightmirror.atlas.interfaces.IAtlas;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AtlasCommand extends BaseCommand implements TabExecutor {
+public class AtlasMessages extends BaseMessages implements TabExecutor {
 
     private Config config;
     private IAtlas plugin;
 
-    public AtlasCommand(IAtlas plugin) {
+    public AtlasMessages(IAtlas plugin) {
         super(plugin.getConfigContainer().getBase());
         this.config = plugin.getConfigContainer().getBase();
         this.plugin = plugin;
@@ -31,7 +31,7 @@ public class AtlasCommand extends BaseCommand implements TabExecutor {
         }
 
         switch (args[0]) {
-            case "reload":
+            case "create":
                 sendReload(sender);
                 break;
             case "stats":
@@ -48,10 +48,8 @@ public class AtlasCommand extends BaseCommand implements TabExecutor {
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         List<String> strings = new ArrayList<>();
 
-        if (args.length == 1 && hasPermissionWithoutMessage(sender)) {
-            strings.add("help");
-            strings.add("stats");
-            strings.add("reload");
+        if (args.length == 1 && hasPermissionWithoutMessage(sender, "atlas.admin")) {
+            strings.addAll(List.of("help", "reload", "stats"));
         }
 
         return strings;

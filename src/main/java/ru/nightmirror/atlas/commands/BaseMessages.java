@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 import ru.nightmirror.atlas.config.Config;
 
 @RequiredArgsConstructor
-public abstract class BaseCommand {
+public abstract class BaseMessages {
 
     private final Config baseConfig;
 
@@ -33,10 +33,6 @@ public abstract class BaseCommand {
         return false;
     }
 
-    public boolean isArgsCorrectLength(CommandSender sender, String[] args, int needLength) {
-        return args.length >= needLength;
-    }
-
     public boolean isPlayer(CommandSender sender) {
         if (!(sender instanceof Player)) {
             sender.sendMessage(baseConfig.getString("messages.not-permission"));
@@ -49,6 +45,15 @@ public abstract class BaseCommand {
         button.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(hover).create()));
         button.setClickEvent(new ClickEvent(action, value));
         return button;
+    }
+
+    public boolean isNumberWithoutMessage(String text) {
+        try {
+            Integer.parseInt(text);
+            return true;
+        } catch (Exception exception) {
+            return false;
+        }
     }
 
     public boolean isNumber(CommandSender sender, String text) {
