@@ -43,6 +43,9 @@ public class MarkerCommand extends BaseMessages implements TabExecutor {
         }
 
         switch (args[0]) {
+            case "cancel":
+                processCancel((Player) sender);
+                break;
             case "create":
                 processCreate((Player) sender);
                 break;
@@ -63,6 +66,14 @@ public class MarkerCommand extends BaseMessages implements TabExecutor {
         }
 
         return true;
+    }
+
+    private void processCancel(Player player) {
+        if (manager.cancel(player.getUniqueId())) {
+            player.sendMessage(config.getString("messages.errors.cancelled-response"));
+        } else {
+            player.sendMessage(config.getString("messages.errors.no-to-cancel"));
+        }
     }
 
     private void processList(Player player, String[] args) {

@@ -70,10 +70,10 @@ public class MarkersManager extends BaseMessages implements IMarkersManager {
     }
 
     @Override
-    public boolean cancel(Player player) {
-        boolean contains = controller.containsAnyCallback(player.getUniqueId()) || processing.containsKey(player.getUniqueId());
-        processing.remove(player.getUniqueId());
-        controller.removeAllCallbacks(player.getUniqueId());
+    public boolean cancel(UUID playerUUID) {
+        boolean contains = controller.containsAnyCallback(playerUUID) || processing.containsKey(playerUUID);
+        processing.remove(playerUUID);
+        controller.removeAllCallbacks(playerUUID);
         return contains;
     }
 

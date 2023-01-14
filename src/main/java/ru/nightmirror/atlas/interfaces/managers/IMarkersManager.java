@@ -15,7 +15,7 @@ public interface IMarkersManager extends Manager {
     boolean remove(UUID id);
     boolean editDescription(Player player, UUID id);
     boolean isOwner(UUID playerUUID, UUID id);
-    boolean cancel(Player playerUUID);
+    boolean cancel(UUID playerUUID);
     boolean isExists(UUID id);
     boolean isProcessing(UUID uuid);
     int countOfMarkers(UUID playerUUID);
