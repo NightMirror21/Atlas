@@ -91,17 +91,17 @@ public class TerritoryCommand extends BaseMessages implements TabExecutor {
 
         switch (args[1]) {
             case "own":
-                sendListPage(player, new ArrayList<>(manager.getTerritories(player.getUniqueId())), page, "own");
+                sendListPage(player, new ArrayList<>(manager.getByOwnerUUID(player.getUniqueId())), page, "own");
                 break;
             case "all":
-                sendListPage(player, new ArrayList<>(manager.getTerritories()), page, "all");
+                sendListPage(player, new ArrayList<>(manager.getByOwnerUUID()), page, "all");
                 break;
             default:
                 UUID playerUUID = PlayerUtils.uuidFromNickname(args[1]);
                 if (playerUUID == null) {
                     sendListPage(player, List.of(), page, "");
                 } else {
-                    sendListPage(player, new ArrayList<>(manager.getTerritories(playerUUID)), page, args[1]);
+                    sendListPage(player, new ArrayList<>(manager.getByOwnerUUID(playerUUID)), page, args[1]);
                 }
         }
     }
@@ -149,7 +149,7 @@ public class TerritoryCommand extends BaseMessages implements TabExecutor {
             return;
         }
 
-        if (manager.getTerritories(player.getUniqueId()).size() >= config.getInt("settings.maximum-per-player")) {
+        if (manager.getByOwnerUUID(player.getUniqueId()).size() >= config.getInt("settings.maximum-per-player")) {
             player.sendMessage(config.getString("messages.errors.limit-is-reached"));
             return;
         }
@@ -176,7 +176,7 @@ public class TerritoryCommand extends BaseMessages implements TabExecutor {
             return;
         }
 
-        Territory territory = manager.getTerritory(uuid);
+        Territory territory = manager.getById(uuid);
 
         config.getList("messages.info").forEach(line -> {
             line = setPlaceholders(line, territory);
@@ -245,7 +245,7 @@ public class TerritoryCommand extends BaseMessages implements TabExecutor {
             return;
         }
 
-        if (manager.getTerritories(player.getUniqueId()).size() == 0) {
+        if (manager.getByOwnerUUID(player.getUniqueId()).size() == 0) {
             player.sendMessage(config.getString("messages.errors.no-have-territories"));
             return;
         }
@@ -295,17 +295,17 @@ public class TerritoryCommand extends BaseMessages implements TabExecutor {
             switch (args[0]) {
                 case "list":
                     strings.addAll(List.of("own", "all"));
-                    strings.addAll(manager.getTerritories().stream().map(Territory::getUUID).collect(Collectors.toList()));
+                    strings.addAll(manager.getByOwnerUUID().stream().map(Territory::getUUID).collect(Collectors.toList()));
                     break;
                 case "info":
-                    strings.addAll(manager.getTerritories().stream().map(Territory::getUUID).collect(Collectors.toList()));
+                    strings.addAll(manager.getByOwnerUUID().stream().map(Territory::getUUID).collect(Collectors.toList()));
                     break;
                 case "remove":
                 case "edit":
                     if (hasPermissionWithoutMessage(sender, "territory.admin")) {
-                        strings.addAll(manager.getTerritories().stream().map(Territory::getUUID).collect(Collectors.toList()));
+                        strings.addAll(manager.getByOwnerUUID().stream().map(Territory::getUUID).collect(Collectors.toList()));
                     } else {
-                        strings.addAll(manager.getTerritories(((Player) sender).getUniqueId()).stream().map(Territory::getUUID).collect(Collectors.toList()));
+                        strings.addAll(manager.getByOwnerUUID(((Player) sender).getUniqueId()).stream().map(Territory::getUUID).collect(Collectors.toList()));
                     }
                     break;
             }

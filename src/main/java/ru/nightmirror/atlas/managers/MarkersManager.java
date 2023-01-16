@@ -65,7 +65,7 @@ public class MarkersManager extends BaseMessages implements IMarkersManager {
 
     @Override
     public boolean isOwner(UUID playerUUID, UUID id) {
-        Marker marker = getMarker(id);
+        Marker marker = getById(id);
         return marker != null && marker.getOwnerUUID().equals(playerUUID.toString());
     }
 
@@ -94,7 +94,7 @@ public class MarkersManager extends BaseMessages implements IMarkersManager {
     }
 
     @Override
-    public int countOfMarkers(UUID playerUUID) {
+    public int countByOwnerUUID(UUID playerUUID) {
         try {
             return data.queryForEq("owner_uuid", playerUUID.toString()).size();
         } catch (Exception exception) {
@@ -106,7 +106,7 @@ public class MarkersManager extends BaseMessages implements IMarkersManager {
 
     @Nullable
     @Override
-    public Marker getMarker(UUID id) {
+    public Marker getById(UUID id) {
         try {
             return data.queryForId(id.toString());
         } catch (Exception exception) {
@@ -117,7 +117,7 @@ public class MarkersManager extends BaseMessages implements IMarkersManager {
     }
 
     @Override
-    public Set<Marker> getMarkers(UUID ownerUUID) {
+    public Set<Marker> getByOwnerUUID(UUID ownerUUID) {
         try {
             return new HashSet<>(data.queryForEq("owner_uuid", ownerUUID.toString()));
         } catch (Exception exception) {
@@ -128,7 +128,7 @@ public class MarkersManager extends BaseMessages implements IMarkersManager {
     }
 
     @Override
-    public Set<Marker> getMarkers() {
+    public Set<Marker> getByOwnerUUID() {
         try {
             return new HashSet<>(data.queryForAll());
         } catch (Exception exception) {

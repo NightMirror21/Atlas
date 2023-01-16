@@ -69,8 +69,8 @@ public class AtlasMessages extends BaseMessages implements TabExecutor {
 
     private void sendStats(CommandSender sender) {
         config.getList("messages.stats").forEach(line -> {
-            line = line.replaceAll("%territories_count%", String.valueOf(plugin.getTerritories().getTerritories().size()))
-                    .replaceAll("%markers_count%", String.valueOf(plugin.getMarkers().getMarkers().size()));
+            line = line.replaceAll("%territories_count%", String.valueOf(plugin.getTerritories().getByOwnerUUID().size()))
+                    .replaceAll("%markers_count%", String.valueOf(plugin.getMarkers().getByOwnerUUID().size()));
             sender.sendMessage(line);
         });
     }

@@ -57,7 +57,7 @@ public class TerritoriesManager implements ITerritoryManager {
 
     @Override
     public boolean isOwner(UUID playerUUID, UUID id) {
-        Territory territory = getTerritory(id);
+        Territory territory = getById(id);
         return territory != null && territory.getOwnerUUID().equals(playerUUID.toString());
     }
 
@@ -92,7 +92,7 @@ public class TerritoriesManager implements ITerritoryManager {
     }
 
     @Override
-    public int countOfTerritories(UUID playerUUID) {
+    public int countByOwnerUUID(UUID playerUUID) {
         try {
             return data.queryForEq("owner_uuid", playerUUID.toString()).size();
         } catch (Exception exception) {
@@ -104,7 +104,7 @@ public class TerritoriesManager implements ITerritoryManager {
 
     @Nullable
     @Override
-    public Territory getTerritory(UUID id) {
+    public Territory getById(UUID id) {
         try {
             return data.queryForId(id.toString());
         } catch (Exception exception) {
@@ -115,7 +115,7 @@ public class TerritoriesManager implements ITerritoryManager {
     }
 
     @Override
-    public Set<Territory> getTerritories(UUID ownerUUID) {
+    public Set<Territory> getByOwnerUUID(UUID ownerUUID) {
         try {
             return new HashSet<>(data.queryForEq("owner_uuid", ownerUUID.toString()));
         } catch (Exception exception) {
@@ -126,7 +126,7 @@ public class TerritoriesManager implements ITerritoryManager {
     }
 
     @Override
-    public Set<Territory> getTerritories() {
+    public Set<Territory> getByOwnerUUID() {
         try {
             return new HashSet<>(data.queryForAll());
         } catch (Exception exception) {

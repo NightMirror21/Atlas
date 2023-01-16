@@ -90,17 +90,17 @@ public class MarkerCommand extends BaseMessages implements TabExecutor {
 
         switch (args[1]) {
             case "own":
-                sendListPage(player, new ArrayList<>(manager.getMarkers(player.getUniqueId())), page, "own");
+                sendListPage(player, new ArrayList<>(manager.getByOwnerUUID(player.getUniqueId())), page, "own");
                 break;
             case "all":
-                sendListPage(player, new ArrayList<>(manager.getMarkers()), page, "all");
+                sendListPage(player, new ArrayList<>(manager.getByOwnerUUID()), page, "all");
                 break;
             default:
                 UUID playerUUID = PlayerUtils.uuidFromNickname(args[1]);
                 if (playerUUID == null) {
                     sendListPage(player, List.of(), page, "");
                 } else {
-                    sendListPage(player, new ArrayList<>(manager.getMarkers(playerUUID)), page, args[1]);
+                    sendListPage(player, new ArrayList<>(manager.getByOwnerUUID(playerUUID)), page, args[1]);
                 }
         }
     }
@@ -148,7 +148,7 @@ public class MarkerCommand extends BaseMessages implements TabExecutor {
             return;
         }
 
-        if (manager.getMarkers(player.getUniqueId()).size() >= config.getInt("settings.maximum-per-player")) {
+        if (manager.getByOwnerUUID(player.getUniqueId()).size() >= config.getInt("settings.maximum-per-player")) {
             player.sendMessage(config.getString("messages.errors.limit-is-reached"));
             return;
         }
@@ -175,7 +175,7 @@ public class MarkerCommand extends BaseMessages implements TabExecutor {
             return;
         }
 
-        Marker marker = manager.getMarker(uuid);
+        Marker marker = manager.getById(uuid);
 
         config.getList("messages.info").forEach(line -> {
             line = setPlaceholders(line, marker);
@@ -237,7 +237,7 @@ public class MarkerCommand extends BaseMessages implements TabExecutor {
             return;
         }
 
-        if (manager.getMarkers(player.getUniqueId()).size() == 0) {
+        if (manager.getByOwnerUUID(player.getUniqueId()).size() == 0) {
             player.sendMessage(config.getString("messages.errors.no-have-markers"));
             return;
         }
@@ -287,17 +287,17 @@ public class MarkerCommand extends BaseMessages implements TabExecutor {
             switch (args[0]) {
                 case "list":
                     strings.addAll(List.of("own", "all"));
-                    strings.addAll(manager.getMarkers().stream().map(Marker::getUUID).collect(Collectors.toList()));
+                    strings.addAll(manager.getByOwnerUUID().stream().map(Marker::getUUID).collect(Collectors.toList()));
                     break;
                 case "info":
-                    strings.addAll(manager.getMarkers().stream().map(Marker::getUUID).collect(Collectors.toList()));
+                    strings.addAll(manager.getByOwnerUUID().stream().map(Marker::getUUID).collect(Collectors.toList()));
                     break;
                 case "remove":
                 case "edit":
                     if (hasPermissionWithoutMessage(sender, "marker.admin")) {
-                        strings.addAll(manager.getMarkers().stream().map(Marker::getUUID).collect(Collectors.toList()));
+                        strings.addAll(manager.getByOwnerUUID().stream().map(Marker::getUUID).collect(Collectors.toList()));
                     } else {
-                        strings.addAll(manager.getMarkers(((Player) sender).getUniqueId()).stream().map(Marker::getUUID).collect(Collectors.toList()));
+                        strings.addAll(manager.getByOwnerUUID(((Player) sender).getUniqueId()).stream().map(Marker::getUUID).collect(Collectors.toList()));
                     }
                     break;
             }
