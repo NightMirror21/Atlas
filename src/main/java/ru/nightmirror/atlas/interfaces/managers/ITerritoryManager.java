@@ -12,10 +12,12 @@ public interface ITerritoryManager extends Manager {
     IPlayerController getPlayerController();
     boolean createNew(Player player);
     boolean editName(Player player, UUID id);
+    boolean remove(UUID id);
     boolean editDescription(Player player, UUID id);
     boolean isOwner(UUID playerUUID, UUID id);
-    boolean cancel(Player player);
+    boolean cancel(UUID playerUUID);
     boolean isExists(UUID id);
+    boolean isProcessing(UUID uuid);
     int countOfTerritories(UUID playerUUID);
     @Nullable Territory getTerritory(UUID id);
     Set<Territory> getTerritories(UUID ownerUUID);

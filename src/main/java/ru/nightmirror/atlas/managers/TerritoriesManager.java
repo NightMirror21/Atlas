@@ -4,6 +4,7 @@ import com.j256.ormlite.dao.Dao;
 import org.bukkit.entity.Player;
 import ru.nightmirror.atlas.controllers.intersection.IntersectionChecker;
 import ru.nightmirror.atlas.database.DatabaseLoader;
+import ru.nightmirror.atlas.database.tables.Marker;
 import ru.nightmirror.atlas.database.tables.Territory;
 import ru.nightmirror.atlas.interfaces.controllers.IPlayerController;
 import ru.nightmirror.atlas.interfaces.managers.ITerritoryManager;
@@ -11,6 +12,7 @@ import ru.nightmirror.atlas.interfaces.managers.Manager;
 import ru.nightmirror.atlas.misc.Logging;
 
 import javax.annotation.Nullable;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -20,8 +22,9 @@ public class TerritoriesManager implements ITerritoryManager {
     private final DatabaseLoader loader;
     private final IPlayerController controller;
     private final IntersectionChecker checker = new IntersectionChecker();
-
     private Dao<Territory, String> data;
+
+    private final HashMap<UUID, Marker> processing = new HashMap<>();
 
     public TerritoriesManager(DatabaseLoader loader, IPlayerController controller) {
         this.loader = loader;
@@ -59,10 +62,22 @@ public class TerritoriesManager implements ITerritoryManager {
     }
 
     @Override
-    public boolean cancel(Player player) {
-        boolean contains = controller.containsAnyCallback(player.getUniqueId());
-        controller.removeAllCallbacks(player.getUniqueId());
+    public boolean cancel(UUID playerUUID) {
+        boolean contains = controller.containsAnyCallback(playerUUID) || processing.containsKey(playerUUID);
+        processing.remove(playerUUID);
+        controller.removeAllCallbacks(playerUUID);
         return contains;
+    }
+
+    @Override
+    public boolean remove(UUID id) {
+        // TODO
+        return false;
+    }
+
+    @Override
+    public boolean isProcessing(UUID uuid) {
+        return processing.containsKey(uuid) || controller.containsAnyCallback(uuid);
     }
 
     @Override
@@ -131,6 +146,7 @@ public class TerritoriesManager implements ITerritoryManager {
     @Override
     public void stop() {
         data.clearObjectCache();
+        processing.clear();
         data = null;
         Logging.debug(this, "Stopped");
     }
