@@ -62,11 +62,26 @@ public class TerritoryCommand extends BaseMessages implements TabExecutor {
             case "edit":
                 processEdit((Player) sender, args);
                 break;
+            case "delete_point":
+                processDeletePoint((Player) sender, args);
+                break;
             default:
                 sendHelp(sender);
         }
 
         return true;
+    }
+
+    private void processDeletePoint(Player player, String[] args) {
+        if (args.length < 3) return;
+
+        if (!isNumber(player, args[1]) || !isNumber(player, args[2])) return;
+
+        if (manager.isProcessing(player.getUniqueId())) {
+            manager.removeLastSelectedPoint(player, Integer.parseInt(args[1]), Integer.parseInt(args[2]));
+        } else {
+            player.sendMessage(config.getString("messages.errors.no-to-cancel"));
+        }
     }
 
     private void processCancel(Player player) {
@@ -144,8 +159,10 @@ public class TerritoryCommand extends BaseMessages implements TabExecutor {
 
     private void processCreate(Player player) {
         if (manager.isProcessing(player.getUniqueId())) {
-            player.sendMessage(config.getString("messages.errors.already-running-cancel-offer"));
-            player.spigot().sendMessage(buildCancelButton());
+            if (!manager.create(player)) {
+                player.sendMessage(config.getString("messages.errors.already-running-cancel-offer"));
+                player.spigot().sendMessage(buildCancelButton());
+            }
             return;
         }
 

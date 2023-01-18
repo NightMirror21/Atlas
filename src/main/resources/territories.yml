@@ -19,7 +19,7 @@ messages:
     no-to-cancel: '&e[Atlas] &fAt the moment you are not doing anything'
     no-points-to-remove: '&e[Atlas] &fThis point no longer exists'
     territory-intersect: '&e[Atlas] &fTerritory is intersecting with other'
-    points-in-different-world: '&e[Atlas] &fPoints of territories in different world'
+    point-in-different-world: '&e[Atlas] &fPoint of territory must be in one world'
     too-few-points: '&e[Atlas] &fToo few points. Mark 2 or more'
     already-running-cancel-offer: '&e[Atlas] &fAt the moment you are already creating a territory. Do you want to cancel?'
 
@@ -33,11 +33,11 @@ messages:
 
   write-name: '&a[Atlas] &fWrite to chat name of territory'
   write-description: '&a[Atlas] &fWrite to chat description of territory'
-  mark-points: '&a[Atlas] Mark points of your territory by left click'
+  mark-points: '&a[Atlas] Mark points of your territory by left click. When there are enough of them, enter the command again'
 
   point-marked: '&7#%number% &fmarked'
-  point-remove-button: '&7Click here to delete this point'
-  point-remove-button-hover: '&7Delete'
+  point-remove-button: '&7[Delete]'
+  point-remove-button-hover: '&7Click here to delete this point'
   point-removed-response: '&a[Atlas] &fDeleted'
 
   created-successfully: '&a[Atlas] &fTerritory created'
