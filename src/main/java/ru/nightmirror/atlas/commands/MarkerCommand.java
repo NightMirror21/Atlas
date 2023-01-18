@@ -124,21 +124,18 @@ public class MarkerCommand extends BaseMessages implements TabExecutor {
         for (int i = 5 * page; i < Math.min((5 * page + 5), markers.size()); i++) {
             Marker marker = markers.get(i);
             TextComponent item = new TextComponent(setPlaceholders(config.getString("messages.list-item"), marker) + " ");
-            TextComponent button = createButton(config.getString("messages.list-more-button"), config.getString("messages.list-more-button-hover"), ClickEvent.Action.RUN_COMMAND, "marker info " + marker.getUUID());
+            TextComponent button = createButton(config.getString("messages.list-more-button"), config.getString("messages.list-more-button-hover"), ClickEvent.Action.RUN_COMMAND, "/marker info " + marker.getUUID().toString());
             item.addExtra(button);
             player.spigot().sendMessage(item);
         }
 
-        TextComponent previousPage = createButton(config.getString("messages.list-previous-page-button"), config.getString("messages.list-next-page-button-hover"), ClickEvent.Action.RUN_COMMAND, String.format("marker list %s %d", type, page - 1));
-        TextComponent nextPage = createButton(config.getString("messages.list-previous-page-button"), config.getString("messages.list-next-page-button-hover"), ClickEvent.Action.RUN_COMMAND, String.format("marker list %s %d", type, page + 1));
+        TextComponent previousPage = createButton(config.getString("messages.list-previous-page-button"), config.getString("messages.list-previous-page-button-hover"), ClickEvent.Action.RUN_COMMAND, String.format("/marker list %s %d", type, page - 1));
+        TextComponent nextPage = createButton(config.getString("messages.list-next-page-button"), config.getString("messages.list-next-page-button-hover"), ClickEvent.Action.RUN_COMMAND, String.format("/marker list %s %d", type, page + 1));
         TextComponent separator = new TextComponent(config.getString("messages.list-page-buttons-separator")
                 .replaceAll("%current_page%", String.valueOf(page + 1))
                 .replaceAll("%max_pages%", String.valueOf(maxPage)));
 
-        previousPage.addExtra(separator);
-        previousPage.addExtra(nextPage);
-
-        player.spigot().sendMessage(previousPage);
+        player.spigot().sendMessage(previousPage, separator, nextPage);
     }
 
     private void processCreate(Player player) {
@@ -185,7 +182,7 @@ public class MarkerCommand extends BaseMessages implements TabExecutor {
         TextComponent bottom = createButton(config.getString("messages.info-id-copy-button") + " ", config.getString("messages.info-id-copy-button-hover"), ClickEvent.Action.COPY_TO_CLIPBOARD, uuid.toString());
 
         if (hasPermissionWithoutMessage(player, "marker.admin") || manager.isOwner(player.getUniqueId(), uuid)) {
-            bottom.addExtra(createButton(config.getString("messages.remove-button"), config.getString("messages.remove-button-hover"), ClickEvent.Action.RUN_COMMAND, "marker remove " + uuid.toString()));
+            bottom.addExtra(createButton(config.getString("messages.remove-button"), config.getString("messages.remove-button-hover"), ClickEvent.Action.SUGGEST_COMMAND, "/marker remove " + uuid.toString()));
         }
 
         player.spigot().sendMessage(bottom);
@@ -287,7 +284,6 @@ public class MarkerCommand extends BaseMessages implements TabExecutor {
             switch (args[0]) {
                 case "list":
                     strings.addAll(List.of("own", "all"));
-                    strings.addAll(manager.getByOwnerUUID().stream().map(Marker::getUUID).collect(Collectors.toList()));
                     break;
                 case "info":
                     strings.addAll(manager.getByOwnerUUID().stream().map(Marker::getUUID).collect(Collectors.toList()));
@@ -315,6 +311,6 @@ public class MarkerCommand extends BaseMessages implements TabExecutor {
     }
 
     private TextComponent buildCancelButton() {
-        return createButton(config.getString("messages.cancel-button"), config.getString("cancel-button-hover"), ClickEvent.Action.RUN_COMMAND, "marker cancel");
+        return createButton(config.getString("messages.cancel-button"), config.getString("cancel-button-hover"), ClickEvent.Action.RUN_COMMAND, "/marker cancel");
     }
 }

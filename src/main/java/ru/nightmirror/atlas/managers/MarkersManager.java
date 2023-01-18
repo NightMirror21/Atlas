@@ -91,13 +91,13 @@ public class MarkersManager extends BaseMessages implements IMarkersManager {
 
     private boolean checkCorrectDescriptionLength(Player sender, String description) {
         if (description.length() < config.getInt("settings.min-symbols-description-length")) {
-            sender.sendMessage(config.getString("messages.description-is-too-short"));
+            sender.sendMessage(config.getString("messages.errors.description-is-too-short"));
             sender.spigot().sendMessage(buildCancelButton());
             return true;
         }
 
         if (description.length() > config.getInt("settings.max-symbols-description-length")) {
-            sender.sendMessage(config.getString("messages.description-is-too-long"));
+            sender.sendMessage(config.getString("messages.errors.description-is-too-long"));
             sender.spigot().sendMessage(buildCancelButton());
             return true;
         }
@@ -111,6 +111,7 @@ public class MarkersManager extends BaseMessages implements IMarkersManager {
             Marker marker = processing.get(player.getUniqueId());
             marker.setPoint(block.getLocation());
             marker.setCreatedAt(System.currentTimeMillis());
+            marker.setUpdatedAt(System.currentTimeMillis());
             try {
                 data.createIfNotExists(marker);
                 player.sendMessage(config.getString("messages.created-successfully"));
@@ -140,6 +141,7 @@ public class MarkersManager extends BaseMessages implements IMarkersManager {
 
                 try {
                     marker.setName(name);
+                    marker.setUpdatedAt(System.currentTimeMillis());
                     data.update(marker);
                     player.sendMessage(config.getString("messages.edited-successfully"));
                     Logging.debug(this, String.format("Setted name '%s' for marker '%s'", name, id.toString()));
@@ -158,13 +160,13 @@ public class MarkersManager extends BaseMessages implements IMarkersManager {
 
     private boolean checkCorrectNameLength(Player sender, String name) {
         if (name.length() < config.getInt("settings.min-symbols-name-length")) {
-            sender.sendMessage(config.getString("messages.name-is-too-short"));
+            sender.sendMessage(config.getString("messages.errors.name-is-too-short"));
             sender.spigot().sendMessage(buildCancelButton());
             return true;
         }
 
         if (name.length() > config.getInt("settings.max-symbols-name-length")) {
-            sender.sendMessage(config.getString("messages.name-is-too-long"));
+            sender.sendMessage(config.getString("messages.errors.name-is-too-long"));
             sender.spigot().sendMessage(buildCancelButton());
             return true;
         }
@@ -204,6 +206,7 @@ public class MarkersManager extends BaseMessages implements IMarkersManager {
 
                 try {
                     marker.setDescription(description);
+                    marker.setUpdatedAt(System.currentTimeMillis());
                     data.update(marker);
                     player.sendMessage(config.getString("messages.edited-successfully"));
                     Logging.debug(this, String.format("Setted description '%s' for marker '%s'", description, id.toString()));
@@ -326,6 +329,6 @@ public class MarkersManager extends BaseMessages implements IMarkersManager {
     }
 
     private TextComponent buildCancelButton() {
-        return createButton(config.getString("messages.cancel-button"), config.getString("cancel-button-hover"), ClickEvent.Action.RUN_COMMAND, "marker cancel");
+        return createButton(config.getString("messages.cancel-button"), config.getString("messages.cancel-button-hover"), ClickEvent.Action.RUN_COMMAND, "/marker cancel");
     }
 }

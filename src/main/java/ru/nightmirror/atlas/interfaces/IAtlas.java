@@ -11,4 +11,5 @@ public interface IAtlas {
     ITerritoryManager getTerritories();
     IMarkersManager getMarkers();
     IConfigContainer getConfigContainer();
+    String getAtlasVersion();
 }

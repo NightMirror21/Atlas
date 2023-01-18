@@ -140,13 +140,13 @@ public class TerritoryCommand extends BaseMessages implements TabExecutor {
         for (int i = 5 * page; i < Math.min((5 * page + 5), territories.size()); i++) {
             Territory territory = territories.get(i);
             TextComponent item = new TextComponent(setPlaceholders(config.getString("messages.list-item"), territory) + " ");
-            TextComponent button = createButton(config.getString("messages.list-more-button"), config.getString("messages.list-more-button-hover"), ClickEvent.Action.RUN_COMMAND, "territory info " + territory.getUUID());
+            TextComponent button = createButton(config.getString("messages.list-more-button"), config.getString("messages.list-more-button-hover"), ClickEvent.Action.RUN_COMMAND, "/territory info " + territory.getUUID());
             item.addExtra(button);
             player.spigot().sendMessage(item);
         }
 
-        TextComponent previousPage = createButton(config.getString("messages.list-previous-page-button"), config.getString("messages.list-next-page-button-hover"), ClickEvent.Action.RUN_COMMAND, String.format("territory list %s %d", type, page - 1));
-        TextComponent nextPage = createButton(config.getString("messages.list-previous-page-button"), config.getString("messages.list-next-page-button-hover"), ClickEvent.Action.RUN_COMMAND, String.format("territory list %s %d", type, page + 1));
+        TextComponent previousPage = createButton(config.getString("messages.list-previous-page-button"), config.getString("messages.list-next-page-button-hover"), ClickEvent.Action.RUN_COMMAND, String.format("/territory list %s %d", type, page - 1));
+        TextComponent nextPage = createButton(config.getString("messages.list-previous-page-button"), config.getString("messages.list-next-page-button-hover"), ClickEvent.Action.RUN_COMMAND, String.format("/territory list %s %d", type, page + 1));
         TextComponent separator = new TextComponent(config.getString("messages.list-page-buttons-separator")
                 .replaceAll("%current_page%", String.valueOf(page + 1))
                 .replaceAll("%max_pages%", String.valueOf(maxPage)));
@@ -203,7 +203,7 @@ public class TerritoryCommand extends BaseMessages implements TabExecutor {
         TextComponent bottom = createButton(config.getString("messages.info-id-copy-button") + " ", config.getString("messages.info-id-copy-button-hover"), ClickEvent.Action.COPY_TO_CLIPBOARD, uuid.toString());
 
         if (hasPermissionWithoutMessage(player, "territory.admin") || manager.isOwner(player.getUniqueId(), uuid)) {
-            bottom.addExtra(createButton(config.getString("messages.remove-button"), config.getString("messages.remove-button-hover"), ClickEvent.Action.RUN_COMMAND, "territory remove " + uuid.toString()));
+            bottom.addExtra(createButton(config.getString("messages.remove-button"), config.getString("messages.remove-button-hover"), ClickEvent.Action.SUGGEST_COMMAND, "/territory remove " + uuid.toString()));
         }
 
         player.spigot().sendMessage(bottom);
@@ -312,7 +312,6 @@ public class TerritoryCommand extends BaseMessages implements TabExecutor {
             switch (args[0]) {
                 case "list":
                     strings.addAll(List.of("own", "all"));
-                    strings.addAll(manager.getByOwnerUUID().stream().map(Territory::getUUID).collect(Collectors.toList()));
                     break;
                 case "info":
                     strings.addAll(manager.getByOwnerUUID().stream().map(Territory::getUUID).collect(Collectors.toList()));
@@ -340,6 +339,6 @@ public class TerritoryCommand extends BaseMessages implements TabExecutor {
     }
 
     private TextComponent buildCancelButton() {
-        return createButton(config.getString("messages.cancel-button"), config.getString("cancel-button-hover"), ClickEvent.Action.RUN_COMMAND, "territory cancel");
+        return createButton(config.getString("messages.cancel-button"), config.getString("cancel-button-hover"), ClickEvent.Action.RUN_COMMAND, "/territory cancel");
     }
 }

@@ -95,13 +95,13 @@ public class TerritoriesManager extends BaseMessages implements ITerritoryManage
 
     private boolean checkCorrectDescriptionLength(Player sender, String description) {
         if (description.length() < config.getInt("settings.min-symbols-description-length")) {
-            sender.sendMessage(config.getString("messages.description-is-too-short"));
+            sender.sendMessage(config.getString("messages.errors.description-is-too-short"));
             sender.spigot().sendMessage(buildCancelButton());
             return true;
         }
 
         if (description.length() > config.getInt("settings.max-symbols-description-length")) {
-            sender.sendMessage(config.getString("messages.description-is-too-long"));
+            sender.sendMessage(config.getString("messages.errors.description-is-too-long"));
             sender.spigot().sendMessage(buildCancelButton());
             return true;
         }
@@ -127,7 +127,7 @@ public class TerritoriesManager extends BaseMessages implements ITerritoryManage
 
             // Sending message
             TextComponent pointMessage = new TextComponent(config.getString("messages.point-marked").replaceAll("%number%", String.valueOf(points.size()+1)) + " ");
-            TextComponent deleteButton = createButton(config.getString("messages.point-remove-button"), config.getString("messages.point-remove-button-hover"), ClickEvent.Action.RUN_COMMAND, String.format("territory delete_point %d %d", block.getLocation().getBlockX(), block.getLocation().getBlockZ()));
+            TextComponent deleteButton = createButton(config.getString("messages.point-remove-button"), config.getString("messages.point-remove-button-hover"), ClickEvent.Action.RUN_COMMAND, String.format("/territory delete_point %d %d", block.getLocation().getBlockX(), block.getLocation().getBlockZ()));
             pointMessage.addExtra(deleteButton);
             player.spigot().sendMessage(pointMessage);
 
@@ -159,6 +159,7 @@ public class TerritoriesManager extends BaseMessages implements ITerritoryManage
 
                 try {
                     territory.setName(name);
+                    territory.setUpdatedAt(System.currentTimeMillis());
                     data.update(territory);
                     player.sendMessage(config.getString("messages.edited-successfully"));
                     Logging.debug(this, String.format("Setted name '%s' for territory '%s'", name, id.toString()));
@@ -263,13 +264,13 @@ public class TerritoriesManager extends BaseMessages implements ITerritoryManage
 
     private boolean checkCorrectNameLength(Player sender, String name) {
         if (name.length() < config.getInt("settings.min-symbols-name-length")) {
-            sender.sendMessage(config.getString("messages.name-is-too-short"));
+            sender.sendMessage(config.getString("messages.errors.name-is-too-short"));
             sender.spigot().sendMessage(buildCancelButton());
             return true;
         }
 
         if (name.length() > config.getInt("settings.max-symbols-name-length")) {
-            sender.sendMessage(config.getString("messages.name-is-too-long"));
+            sender.sendMessage(config.getString("messages.errors.name-is-too-long"));
             sender.spigot().sendMessage(buildCancelButton());
             return true;
         }
@@ -310,6 +311,7 @@ public class TerritoriesManager extends BaseMessages implements ITerritoryManage
 
                 try {
                     territory.setDescription(description);
+                    territory.setUpdatedAt(System.currentTimeMillis());
                     data.update(territory);
                     player.sendMessage(config.getString("messages.edited-successfully"));
                     Logging.debug(this, String.format("Setted description '%s' for territory '%s'", description, id.toString()));
@@ -432,6 +434,6 @@ public class TerritoriesManager extends BaseMessages implements ITerritoryManage
     }
 
     private TextComponent buildCancelButton() {
-        return createButton(config.getString("messages.cancel-button"), config.getString("cancel-button-hover"), ClickEvent.Action.RUN_COMMAND, "territory cancel");
+        return createButton(config.getString("messages.cancel-button"), config.getString("messages.cancel-button-hover"), ClickEvent.Action.RUN_COMMAND, "/territory cancel");
     }
 }

@@ -21,7 +21,7 @@ messages:
   not-a-number: '&e[Atlas] &f%value% is not number!'
 
   help:
-    - '&a[Atlas] &fv.%plugins_version%'
+    - '&a[Atlas] &fv.%plugin_version%'
     - '/atlas reload &7- reload plugin'
     - '/atlas stats &7- plugin statistics'
     - '/marker help &7- help for markers'

@@ -3,7 +3,7 @@ package ru.nightmirror.atlas;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
-import ru.nightmirror.atlas.commands.AtlasMessages;
+import ru.nightmirror.atlas.commands.AtlasCommand;
 import ru.nightmirror.atlas.commands.MarkerCommand;
 import ru.nightmirror.atlas.config.ConfigContainer;
 import ru.nightmirror.atlas.controllers.PlayerController;
@@ -69,7 +69,7 @@ public class Atlas extends JavaPlugin implements IAtlas {
 
     @Override
     public boolean reload() {
-        return !configContainer.reload() || !database.reload() || !markers.reload() || !territories.reload();
+        return configContainer.reload() && database.reload() && markers.reload() && territories.reload();
     }
 
     @Override
@@ -87,8 +87,13 @@ public class Atlas extends JavaPlugin implements IAtlas {
         return configContainer;
     }
 
+    @Override
+    public String getAtlasVersion() {
+        return getDescription().getVersion();
+    }
+
     private void registerCommands() {
-        TabExecutor atlasCmd = new AtlasMessages(this);
+        TabExecutor atlasCmd = new AtlasCommand(this);
         getCommand("atlas").setExecutor(atlasCmd);
         getCommand("atlas").setTabCompleter(atlasCmd);
 

@@ -9,12 +9,12 @@ import ru.nightmirror.atlas.interfaces.IAtlas;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AtlasMessages extends BaseMessages implements TabExecutor {
+public class AtlasCommand extends BaseMessages implements TabExecutor {
 
     private Config config;
     private IAtlas plugin;
 
-    public AtlasMessages(IAtlas plugin) {
+    public AtlasCommand(IAtlas plugin) {
         super(plugin.getConfigContainer().getBase());
         this.config = plugin.getConfigContainer().getBase();
         this.plugin = plugin;
@@ -31,7 +31,7 @@ public class AtlasMessages extends BaseMessages implements TabExecutor {
         }
 
         switch (args[0]) {
-            case "create":
+            case "reload":
                 sendReload(sender);
                 break;
             case "stats":
@@ -64,7 +64,9 @@ public class AtlasMessages extends BaseMessages implements TabExecutor {
     }
 
     private void sendHelp(CommandSender sender) {
-        config.getList("messages.help").forEach(sender::sendMessage);
+        config.getList("messages.help").forEach(line -> {
+            sender.sendMessage(line.replaceAll("%plugin_version%", plugin.getAtlasVersion()));
+        });
     }
 
     private void sendStats(CommandSender sender) {
