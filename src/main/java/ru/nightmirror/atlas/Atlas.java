@@ -41,7 +41,7 @@ public class Atlas extends JavaPlugin implements IAtlas {
         }
 
         markers = new MarkersManager(configContainer, (DatabaseLoader) database, controller);
-        territories = new TerritoriesManager((DatabaseLoader) database, controller);
+        territories = new TerritoriesManager(configContainer, (DatabaseLoader) database, controller);
 
         registerCommands();
 

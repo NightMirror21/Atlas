@@ -55,8 +55,11 @@ public class MarkersManager extends BaseMessages implements IMarkersManager {
     }
 
     private void processWriteNameCreateNew(Player player) {
+        Logging.debug(this, String.format("Started creating marker for player '%s'", player.getName()));
         player.sendMessage(config.getString("messages.write-name"));
         controller.addTextWroteCallback(player.getUniqueId(), (sender, name) -> {
+            Logging.debug(this, String.format("Attempting to put name '%s' of marker for player '%s'", name, player.getName()));
+
             if (checkCorrectNameLength(sender, name)) return false;
 
             Marker marker = new Marker();
@@ -65,6 +68,7 @@ public class MarkersManager extends BaseMessages implements IMarkersManager {
             marker.setName(name.trim());
 
             processing.put(player.getUniqueId(), marker);
+            Logging.debug(this, String.format("Putted name '%s' of marker for player '%s'", name, player.getName()));
             processWriteDescriptionCreateNew(player);
             return false;
         });
@@ -73,11 +77,13 @@ public class MarkersManager extends BaseMessages implements IMarkersManager {
     private void processWriteDescriptionCreateNew(Player player) {
         player.sendMessage(config.getString("messages.write-description"));
         controller.addTextWroteCallback(player.getUniqueId(), (sender, description) -> {
+            Logging.debug(this, String.format("Attempting to put description '%s' of marker for player '%s'", description, player.getName()));
             if (checkCorrectDescriptionLength(sender, description)) return false;
 
             Marker marker = processing.get(player.getUniqueId());
             marker.setDescription(description);
             processing.put(player.getUniqueId(), marker);
+            Logging.debug(this, String.format("Putted description '%s' of marker for player '%s'", description, player.getName()));
             processSelectPointCreateNew(player);
             return true;
         });
@@ -101,6 +107,7 @@ public class MarkersManager extends BaseMessages implements IMarkersManager {
     private void processSelectPointCreateNew(Player player) {
         player.sendMessage(config.getString("messages.mark-point"));
         controller.addPointSelectedCallback(player.getUniqueId(), (sender, block) -> {
+            Logging.debug(this, String.format("Player '%s' clicked on block with x=%d z=%d", player.getName(), block.getLocation().getBlockX(), block.getLocation().getBlockZ()));
             Marker marker = processing.get(player.getUniqueId());
             marker.setPoint(block.getLocation());
             marker.setCreatedAt(System.currentTimeMillis());
@@ -122,16 +129,20 @@ public class MarkersManager extends BaseMessages implements IMarkersManager {
             return false;
         }
 
+        Logging.debug(this, String.format("New edit name process for player '%s' and marker '%s'", player.getName(), id.toString()));
+
         try {
             Marker marker = data.queryForId(id.toString());
             player.sendMessage(config.getString("messages.write-name"));
             controller.addTextWroteCallback(player.getUniqueId(), (sender, name) -> {
+                Logging.debug(this, String.format("Attempting to set name '%s' for marker '%s'", name, id.toString()));
                 if (checkCorrectNameLength(sender, name)) return false;
 
                 try {
                     marker.setName(name);
                     data.update(marker);
                     player.sendMessage(config.getString("messages.edited-successfully"));
+                    Logging.debug(this, String.format("Setted name '%s' for marker '%s'", name, id.toString()));
                 } catch (Exception exception) {
                     Logging.error(String.format("Can't update marker cause '%s'", exception.getMessage()));
                     player.sendMessage(configContainer.getBase().getString("messages.some-errors"));
@@ -168,6 +179,7 @@ public class MarkersManager extends BaseMessages implements IMarkersManager {
 
         try {
             data.deleteById(id.toString());
+            Logging.debug(this, String.format("Marker '%s' deleted", id.toString()));
             return true;
         } catch (Exception exception) {
             Logging.error(String.format("Can't remove marker cause '%s'", exception.getMessage()));
@@ -181,16 +193,20 @@ public class MarkersManager extends BaseMessages implements IMarkersManager {
             return false;
         }
 
+        Logging.debug(this, String.format("New edit description process for player '%s' and marker '%s'", player.getName(), id.toString()));
+
         try {
             Marker marker = data.queryForId(id.toString());
             player.sendMessage(config.getString("messages.write-description"));
             controller.addTextWroteCallback(player.getUniqueId(), (sender, description) -> {
+                Logging.debug(this, String.format("Attempting to set description '%s' for marker '%s'", description, id.toString()));
                 if (checkCorrectDescriptionLength(sender, description)) return false;
 
                 try {
                     marker.setDescription(description);
                     data.update(marker);
                     player.sendMessage(config.getString("messages.edited-successfully"));
+                    Logging.debug(this, String.format("Setted description '%s' for marker '%s'", description, id.toString()));
                 } catch (Exception exception) {
                     Logging.error(String.format("Can't update marker cause '%s'", exception.getMessage()));
                     player.sendMessage(configContainer.getBase().getString("messages.some-errors"));
@@ -215,6 +231,7 @@ public class MarkersManager extends BaseMessages implements IMarkersManager {
         boolean contains = controller.containsAnyCallback(playerUUID) || processing.containsKey(playerUUID);
         processing.remove(playerUUID);
         controller.removeAllCallbacks(playerUUID);
+        Logging.debug(this, String.format("Cancelled all for player with uuid '%s'", playerUUID.toString()));
         return contains;
     }
 

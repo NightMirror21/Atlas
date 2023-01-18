@@ -78,7 +78,7 @@ public class TerritoryCommand extends BaseMessages implements TabExecutor {
         if (!isNumber(player, args[1]) || !isNumber(player, args[2])) return;
 
         if (manager.isProcessing(player.getUniqueId())) {
-            manager.removeLastSelectedPoint(player, Integer.parseInt(args[1]), Integer.parseInt(args[2]));
+            manager.removeSelectedPoint(player, Integer.parseInt(args[1]), Integer.parseInt(args[2]));
         } else {
             player.sendMessage(config.getString("messages.errors.no-to-cancel"));
         }
