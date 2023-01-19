@@ -1,0 +1,82 @@
+settings:
+  maximum-per-player: 1
+  min-symbols-name-length: 3
+  max-symbols-name-length: 20
+  min-symbols-description-length: 10
+  max-symbols-description-length: 100
+  can-intersect-other-territories: false
+
+
+messages:
+  errors:
+    name-is-too-short: '&e[Atlas] &fНазвание территории слишком короткое'
+    name-is-too-long: '&e[Atlas] &fНазвание территории слишком длинное'
+    description-is-too-short: '&e[Atlas] &fОписание территории слишком короткое'
+    description-is-too-long: '&e[Atlas] &fОписание территории слишком длинное'
+    territory-not-exist: '&e[Atlas] &fТерритории не существует'
+    territory-not-your: '&e[Atlas] &fЭта территория не принадлежит вам'
+    limit-is-reached: '&e[Atlas] &fВы не можете создать более 1ой территории'
+    no-to-cancel: '&e[Atlas] &fВ данный момент вы не совершаете никаких операций'
+    no-points-to-remove: '&e[Atlas] &fДанная точка не существует'
+    territory-intersect: '&e[Atlas] &fТерритории пересекаются'
+    point-in-different-world: '&e[Atlas] &fТочки должны находится в одном мире'
+    too-few-points: '&e[Atlas] &fСлишком мало точек. Выделите 2е и более'
+    already-running-cancel-offer: '&e[Atlas] &fВ данный момент вы совершаете операцию. Отменить?'
+
+  help:
+    - '&a[Atlas] Помощь по территориям'
+    - '/territory create &7- создать территорию'
+    - '/territory list own/all/[nickname]&7- список территорий'
+    - '/territory info [id]&7- информация о территории с id'
+    - '/territory remove [id] &7- удалить территорию с id'
+    - '/territory edit [id] name/desc &7- изменить имя или описание территории с id'
+
+  write-name: '&a[Atlas] &fНапишите в чат название территории'
+  write-description: '&a[Atlas] &fНапишите в чат описание территории'
+  mark-points: '&a[Atlas] &fВыделите границу вашей территории (от 2х точек). После введите команду ещё раз'
+
+  point-marked: '&8#%number% &fОтмечена'
+  point-remove-button: '&7[✕]'
+  point-remove-button-hover: '&7Кликните чтобы удалить'
+  point-removed-response: '&a[Atlas] &fУдалено'
+
+  created-successfully: '&a[Atlas] &fТерритория создана'
+  edited-successfully: '&a[Atlas] &fТерритория изменена'
+  removed-successfully: '&a[Atlas] &fТерритория удалена'
+
+  cancel-button: '&a[Atlas] &7Кликните чтобы отменить'
+  cancel-button-hover: 'Отменить'
+  cancelled-response: '&a[Atlas] &fОтменено'
+
+  list-header: '&a[Atlas] Список территорий'
+  list-is-empty: '&a[Atlas] &fСписок территорий пуст'
+
+  # %territory_name%; %territory_description%; %territory_owner%; %territory_updated%; %territory_created%; %territory_point%
+  list-item: '&a- &f%territory_name% &7(%territory_owner%)'
+  territory-point-format: '[мир: %world_name%; x: %x%; z: %z%]'
+
+  list-more-button: '&7[≡]'
+  list-more-button-hover: 'Кликните для подробной информации'
+
+  list-previous-page-button: '&7[◀]'
+  list-previous-page-button-hover: 'На пред. страницу'
+
+  list-next-page-button: '&7[▶]'
+  list-next-page-button-hover: 'На след. страницу'
+
+  list-page-buttons-separator: ' &f- &7%current_page%/%max_pages% &f- '
+
+  # %territory_name%; %territory_description%; %territory_owner%; %territory_updated%; %territory_created%; %territory_point%
+  info:
+    - '&a[Atlas] &f&l%territory_name%'
+    - '&a- &fОписание: &a%territory_description%'
+    - '&a- &fАвтор: &a%territory_owner%'
+    - '&a- &fОдна из точек: &a%territory_point%'
+    - '&a- &fСоздано: &a%territory_created%'
+    - '&a- &fИзменено: &a%territory_updated%'
+
+  info-id-copy-button: '&7[Скопировать ID]'
+  info-id-copy-button-hover: 'ID будет скопирован в буфер обмена'
+
+  remove-button: '&7[Удалить]'
+  remove-button-hover: 'Кликните чтобы удалить'

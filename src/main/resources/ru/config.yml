@@ -1,0 +1,40 @@
+database:
+  type: 'sqlite'
+
+  # If not sqlite or h2
+  address: 'localhost:3030'
+  name: 'minecraft'
+
+  # If using user and password
+  use-user-and-password: false
+  user: 'user'
+  password: 'qwerty123'
+
+messages:
+  plugin-reloaded-success: '&a[Atlas] &fПлагин успешно перезагружен'
+  some-errors: '&a[Atlas] &fВозникла ошибка при выполнении'
+  plugin-reloaded-not-success: '&c[Atlas] &fПлагин перезагрузился не успешно, он будет остановлен'
+  not-permission: '&c[Atlas] &fУ вас нет прав на это'
+  only-for-players: '&c[Atlas] &fДанная команда только для игроков'
+  no-enough-arguments: '&c[Atlas] &fНедостаточно аргументов'
+  argument-incorrect: '&c[Atlas] &fАргумент(ы) неверные'
+  not-a-number: '&e[Atlas] &f%value% не является числом'
+
+  help:
+    - '&a[Atlas] v.%plugin_version%'
+    - '/atlas reload &7- перезагрузить плагин'
+    - '/atlas stats &7- статистика плагина'
+    - '/marker help &7- помощь по маркерам'
+    - '/mark &7- псевдоним /mark'
+    - '/territory help &7- помощь по территориям'
+    - '/tr &7- псевдоним /territory'
+    - '/atlas help &7- помощь по плагину'
+    - '/atl &7- псевдоним /atlas'
+
+  stats:
+    - '&a[Atlas] Статистика'
+    - '&a- %territories_count% &fтерриторий'
+    - '&a- %markers_count% &fмаркеров'
+
+
+is-debug-enabled: false

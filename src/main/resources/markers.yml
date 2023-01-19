@@ -28,7 +28,7 @@ messages:
 
   write-name: '&a[Atlas] &fWrite to chat name of marker'
   write-description: '&a[Atlas] &fWrite to chat description of marker'
-  mark-point: '&a[Atlas] Left click to set marker location'
+  mark-point: '&a[Atlas] &fLeft click to set marker location'
 
   created-successfully: '&a[Atlas] &fMarker created'
   edited-successfully: '&a[Atlas] &fMarker edited'
@@ -41,27 +41,29 @@ messages:
   list-header: '&a[Atlas] &fList of markers'
   list-is-empty: '&a[Atlas] &fList of markers is empty'
 
-  # %marker_name%; %marker_description%; %marker_owner%; %marker_updated%; %marker_created%
+  # %marker_name%; %marker_description%; %marker_owner%; %marker_updated%; %marker_created%; %marker_point%
   list-item: '&a- &f%marker_name% &7(%marker_owner%)'
+  marker-point-format: '[world: %world_name%; x: %x%; z: %z%]'
 
-  list-more-button: '&7[More]'
+  list-more-button: '&7[≡]'
   list-more-button-hover: 'Click here to get more info'
 
-  list-previous-page-button: '&7[Back]'
+  list-previous-page-button: '&7[◀]'
   list-previous-page-button-hover: 'Go to previous page'
 
-  list-next-page-button: '&7[Next]'
+  list-next-page-button: '&7[▶]'
   list-next-page-button-hover: 'Go to next page'
 
   list-page-buttons-separator: ' &f- &7%current_page%/%max_pages% &f- '
 
-  # %marker_name%; %marker_description%; %marker_owner%; %marker_updated%; %marker_created%
+  # %marker_name%; %marker_description%; %marker_owner%; %marker_updated%; %marker_created%; %marker_point%
   info:
-    - '&a[Atlas] %marker_name%'
-    - '&a- &fCreated by %marker_owner%'
-    - '&a- &fCreated at %marker_created%'
-    - '&a- &fUpdated at %marker_updated%'
-    - '&a- &fDescription: %marker_description%'
+    - '&a[Atlas] &f&l%marker_name%'
+    - '&a- &fDescription: &a%marker_description%'
+    - '&a- &fPoint: &a%marker_point%'
+    - '&a- &fCreated by: &a%marker_owner%'
+    - '&a- &fCreated at: &a%marker_created%'
+    - '&a- &fUpdated at: &a%marker_updated%'
 
   info-id-copy-button: '&7[Copy ID]'
   info-id-copy-button-hover: 'ID will be copied to your buffer'

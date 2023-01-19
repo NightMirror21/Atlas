@@ -5,6 +5,7 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import ru.nightmirror.atlas.commands.AtlasCommand;
 import ru.nightmirror.atlas.commands.MarkerCommand;
+import ru.nightmirror.atlas.commands.TerritoryCommand;
 import ru.nightmirror.atlas.config.ConfigContainer;
 import ru.nightmirror.atlas.controllers.PlayerController;
 import ru.nightmirror.atlas.database.DatabaseLoader;
@@ -100,5 +101,9 @@ public class Atlas extends JavaPlugin implements IAtlas {
         MarkerCommand markerCmd = new MarkerCommand(configContainer, (IMarkersManager) markers);
         getCommand("marker").setExecutor(markerCmd);
         getCommand("marker").setTabCompleter(markerCmd);
+
+        TerritoryCommand territoryCmd = new TerritoryCommand(configContainer, (ITerritoryManager) territories);
+        getCommand("territory").setExecutor(territoryCmd);
+        getCommand("territory").setTabCompleter(territoryCmd);
     }
 }

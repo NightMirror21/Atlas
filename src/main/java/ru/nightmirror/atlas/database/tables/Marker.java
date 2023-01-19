@@ -46,7 +46,7 @@ public class Marker {
     @Nullable
     public Location getPoint() {
         try {
-            String pointStr = serializedPoint.split("|")[0];
+            String pointStr = serializedPoint;
             Location point = new Location(
                     Bukkit.getWorld(pointStr.split("~")[0]),
                     Integer.parseInt(pointStr.split("~")[1]),

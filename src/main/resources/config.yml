@@ -11,30 +11,30 @@ database:
   password: 'qwerty123'
 
 messages:
-  plugin-reloaded-success: '&a[Atlas] &fPlugin reloaded successful!'
+  plugin-reloaded-success: '&a[Atlas] &fPlugin reloaded successful'
   some-errors: '&a[Atlas] &fSome problems have occurred'
   plugin-reloaded-not-success: '&c[Atlas] &fPlugin reloaded not successful. He will be stopped'
-  not-permission: '&c[Atlas] &fYou do not have permission!'
+  not-permission: '&c[Atlas] &fYou do not have permission'
   only-for-players: '&c[Atlas] &fThis command only for players'
   no-enough-arguments: '&c[Atlas] &fNo enough arguments'
   argument-incorrect: '&c[Atlas] &fArgument(s) incorrect'
-  not-a-number: '&e[Atlas] &f%value% is not number!'
+  not-a-number: '&e[Atlas] &f%value% is not number'
 
   help:
-    - '&a[Atlas] &fv.%plugin_version%'
+    - '&a[Atlas] v.%plugin_version%'
     - '/atlas reload &7- reload plugin'
     - '/atlas stats &7- plugin statistics'
     - '/marker help &7- help for markers'
-    - '&7/mark - shortcut for /mark'
+    - '/mark &7- shortcut for /mark'
     - '/territory help &7- help for territories'
-    - '&7/tr - shortcut for /territory'
+    - '/tr &7- shortcut for /territory'
     - '/atlas help &7- help for atlas'
-    - '&7/atl - shortcut for /atlas'
+    - '/atl &7- shortcut for /atlas'
 
   stats:
-    - '&a[Atlas] &fStatistics'
-    - '&a%territories_count% &fterritories'
-    - '&a%markers_count% &fmarkers'
+    - '&a[Atlas] Statistics'
+    - '&a- %territories_count% &fterritories'
+    - '&a- %markers_count% &fmarkers'
 
 
 is-debug-enabled: false

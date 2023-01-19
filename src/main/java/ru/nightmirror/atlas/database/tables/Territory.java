@@ -48,7 +48,8 @@ public class Territory {
     public LinkedHashSet<Location> getPoints() {
         try {
             LinkedHashSet<Location> points = new LinkedHashSet<>();
-            Arrays.stream(serializedPoints.split("|")).forEach(pointStr -> {
+            if (serializedPoints == null) return null;
+            Arrays.stream(serializedPoints.split("\\|")).forEach(pointStr -> {
                 Location point = new Location(
                         Bukkit.getWorld(pointStr.split("~")[0]),
                         Integer.parseInt(pointStr.split("~")[1]),

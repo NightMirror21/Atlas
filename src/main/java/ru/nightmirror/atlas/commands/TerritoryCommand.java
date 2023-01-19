@@ -86,7 +86,7 @@ public class TerritoryCommand extends BaseMessages implements TabExecutor {
 
     private void processCancel(Player player) {
         if (manager.cancel(player.getUniqueId())) {
-            player.sendMessage(config.getString("messages.errors.cancelled-response"));
+            player.sendMessage(config.getString("messages.cancelled-response"));
         } else {
             player.sendMessage(config.getString("messages.errors.no-to-cancel"));
         }
@@ -129,7 +129,7 @@ public class TerritoryCommand extends BaseMessages implements TabExecutor {
 
         int maxPage = territories.size() % 5 == 0 ? territories.size() / 5 : territories.size() / 5 + 1;
 
-        if (page * 5 > territories.size())
+        if (page * 5 >= territories.size())
             page = 0;
 
         if (page < 0)
@@ -145,22 +145,19 @@ public class TerritoryCommand extends BaseMessages implements TabExecutor {
             player.spigot().sendMessage(item);
         }
 
-        TextComponent previousPage = createButton(config.getString("messages.list-previous-page-button"), config.getString("messages.list-next-page-button-hover"), ClickEvent.Action.RUN_COMMAND, String.format("/territory list %s %d", type, page - 1));
-        TextComponent nextPage = createButton(config.getString("messages.list-previous-page-button"), config.getString("messages.list-next-page-button-hover"), ClickEvent.Action.RUN_COMMAND, String.format("/territory list %s %d", type, page + 1));
+        TextComponent previousPage = createButton(config.getString("messages.list-previous-page-button"), config.getString("messages.list-previous-page-button-hover"), ClickEvent.Action.RUN_COMMAND, String.format("/territory list %s %d", type, page - 1));
+        TextComponent nextPage = createButton(config.getString("messages.list-next-page-button"), config.getString("messages.list-next-page-button-hover"), ClickEvent.Action.RUN_COMMAND, String.format("/territory list %s %d", type, page + 1));
         TextComponent separator = new TextComponent(config.getString("messages.list-page-buttons-separator")
                 .replaceAll("%current_page%", String.valueOf(page + 1))
                 .replaceAll("%max_pages%", String.valueOf(maxPage)));
 
-        previousPage.addExtra(separator);
-        previousPage.addExtra(nextPage);
-
-        player.spigot().sendMessage(previousPage);
+        player.spigot().sendMessage(previousPage, separator, nextPage);
     }
 
     private void processCreate(Player player) {
         if (manager.isProcessing(player.getUniqueId())) {
             if (!manager.create(player)) {
-                player.sendMessage(config.getString("messages.errors.already-running-cancel-offer"));
+                //player.sendMessage(config.getString("messages.errors.already-running-cancel-offer"));
                 player.spigot().sendMessage(buildCancelButton());
             }
             return;
@@ -221,7 +218,7 @@ public class TerritoryCommand extends BaseMessages implements TabExecutor {
                 .replaceAll("%territory_owner%", PlayerUtils.nicknameFromUUID(UUID.fromString(territory.getOwnerUUID())))
                 .replaceAll("%territory_updated%", TimeUtils.getFormattedTime(territory.getUpdatedAt()))
                 .replaceAll("%territory_point%", pointFormatted)
-                .replaceAll("%territory_created%", TimeUtils.getFormattedTime(territory.getUpdatedAt()));
+                .replaceAll("%territory_created%", TimeUtils.getFormattedTime(territory.getCreatedAt()));
     }
 
     private void processRemove(Player player, String[] args) {
@@ -339,6 +336,6 @@ public class TerritoryCommand extends BaseMessages implements TabExecutor {
     }
 
     private TextComponent buildCancelButton() {
-        return createButton(config.getString("messages.cancel-button"), config.getString("cancel-button-hover"), ClickEvent.Action.RUN_COMMAND, "/territory cancel");
+        return createButton(config.getString("messages.cancel-button"), config.getString("messages.cancel-button-hover"), ClickEvent.Action.RUN_COMMAND, "/territory cancel");
     }
 }

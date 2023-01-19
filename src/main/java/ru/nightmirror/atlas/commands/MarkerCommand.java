@@ -2,6 +2,7 @@ package ru.nightmirror.atlas.commands;
 
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
+import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
@@ -70,7 +71,7 @@ public class MarkerCommand extends BaseMessages implements TabExecutor {
 
     private void processCancel(Player player) {
         if (manager.cancel(player.getUniqueId())) {
-            player.sendMessage(config.getString("messages.errors.cancelled-response"));
+            player.sendMessage(config.getString("messages.cancelled-response"));
         } else {
             player.sendMessage(config.getString("messages.errors.no-to-cancel"));
         }
@@ -189,11 +190,19 @@ public class MarkerCommand extends BaseMessages implements TabExecutor {
     }
 
     private String setPlaceholders(String text, Marker marker) {
+
+        Location point = (Location) marker.getPoint();
+        String pointFormatted = config.getString("messages.marker-point-format")
+                .replaceAll("%world_name%", point.getWorld().getName())
+                .replaceAll("%x%", String.valueOf(point.getBlockX()))
+                .replaceAll("%z%", String.valueOf(point.getBlockZ()));
+
         return text.replaceAll("%marker_name%", marker.getName())
                 .replaceAll("%marker_description%", marker.getDescription())
+                .replaceAll("%marker_point%", pointFormatted)
                 .replaceAll("%marker_owner%", PlayerUtils.nicknameFromUUID(UUID.fromString(marker.getOwnerUUID())))
                 .replaceAll("%marker_updated%", TimeUtils.getFormattedTime(marker.getUpdatedAt()))
-                .replaceAll("%marker_created%", TimeUtils.getFormattedTime(marker.getUpdatedAt()));
+                .replaceAll("%marker_created%", TimeUtils.getFormattedTime(marker.getCreatedAt()));
     }
 
     private void processRemove(Player player, String[] args) {

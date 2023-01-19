@@ -1,0 +1,76 @@
+settings:
+  maximum-per-player: 2
+  min-symbols-name-length: 3
+  max-symbols-name-length: 20
+  min-symbols-description-length: 10
+  max-symbols-description-length: 100
+
+messages:
+  errors:
+    name-is-too-short: '&e[Atlas] &fНазвание маркера слишком короткое'
+    name-is-too-long: '&e[Atlas] &fНазвание маркера слишком длинное'
+    description-is-too-short: '&e[Atlas] &fОписание маркера слишком короткое'
+    description-is-too-long: '&e[Atlas] &fОписание маркера слишком длинное'
+    marker-not-exist: '&e[Atlas] &fМаркера не существует'
+    no-have-markers: '&e[Atlas] &fУ вас нет маркеров'
+    marker-not-your: '&e[Atlas] &fЭтот маркер не принадлежит вам'
+    limit-is-reached: '&e[Atlas] &fВы не можете создать более 2х маркеров'
+    no-to-cancel: '&e[Atlas] &fВ данный момент вы не совершаете никаких операций'
+    already-running-cancel-offer: '&e[Atlas] &fВ данный момент вы совершаете операцию. Отменить?'
+
+  help:
+    - '&a[Atlas] Помощь по маркерам'
+    - '/marker create &7- создать маркер'
+    - '/marker list own/all/[nickname]&7- список маркеров'
+    - '/marker info [id]&7- информация по поводу маркера с id'
+    - '/marker remove [id] &7- удалить маркер с id'
+    - '/marker edit [id] name/desc &7- изменить имя или описание маркера с id'
+
+  write-name: '&a[Atlas] &fНапишите в чат название маркера'
+  write-description: '&a[Atlas] &fНапишите в чат описание для маркера'
+  mark-point: '&a[Atlas] &fОтметьте положение маркера с помощью лкм. по блоку'
+
+  created-successfully: '&a[Atlas] &fМаркер создан'
+  edited-successfully: '&a[Atlas] &fМаркер изменен'
+  removed-successfully: '&a[Atlas] &fMаркер удален'
+
+  cancel-button: '&a[Atlas] &7Для отмены кликните'
+  cancel-button-hover: 'Отменить'
+  cancelled-response: '&a[Atlas] &fОтменено'
+
+  list-header: '&a[Atlas] &fСписок маркеров'
+  list-is-empty: '&a[Atlas] &fСписок маркеров пуст'
+
+  # %marker_name%; %marker_description%; %marker_owner%; %marker_updated%; %marker_created%; %marker_point%
+  list-item: '&a- &f%marker_name% &7(%marker_owner%)'
+  marker-point-format: '[мир: %world_name%; x: %x%; z: %z%]'
+
+  list-more-button: '&7[≡]'
+  list-more-button-hover: 'Кликните для подробной информации'
+
+  list-previous-page-button: '&7[◀]'
+  list-previous-page-button-hover: 'На пред. странице'
+
+  list-next-page-button: '&7[▶]'
+  list-next-page-button-hover: 'На след. страницу'
+
+  list-page-buttons-separator: ' &f- &7%current_page%/%max_pages% &f- '
+
+  # %marker_name%; %marker_description%; %marker_owner%; %marker_updated%; %marker_created%; %marker_point%
+  info:
+    - '&a[Atlas] &f&l%marker_name%'
+    - '&a- &fОписание: &a%marker_description%'
+    - '&a- &fТочка: &a%marker_point%'
+    - '&a- &fАвтор: &a%marker_owner%'
+    - '&a- &fСоздано: &a%marker_created%'
+    - '&a- &fОбновлено: &a%marker_updated%'
+
+  info-id-copy-button: '&7[Copy ID]'
+  info-id-copy-button-hover: 'ID будет скопирован в буфер обмена'
+
+  remove-button: '&7[Remove]'
+  remove-button-hover: 'Кликните для отмены'
+
+
+
+

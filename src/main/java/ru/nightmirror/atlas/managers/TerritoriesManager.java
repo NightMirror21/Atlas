@@ -231,7 +231,8 @@ public class TerritoriesManager extends BaseMessages implements ITerritoryManage
 
         try {
             data.create(territory);
-            player.sendMessage(config.getString(config.getString("messages.created-successfully")));
+            Logging.debug(this, String.format("Territory '%s' created", territory.getUUID().toString()));
+            player.sendMessage(config.getString("messages.created-successfully"));
             cancel(player.getUniqueId());
         } catch (Exception exception) {
             Logging.error(String.format("Can't create territory cause '%s'", exception.getMessage()));
