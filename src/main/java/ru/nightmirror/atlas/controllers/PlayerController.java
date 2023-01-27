@@ -23,9 +23,6 @@ public class PlayerController implements IPlayerController, Listener {
         if (event.getAction().equals(Action.LEFT_CLICK_BLOCK) && event.getClickedBlock() != null && pointsCallback.containsKey(event.getPlayer().getUniqueId())) {
             if (pointsCallback.get(event.getPlayer().getUniqueId()).execute(event.getPlayer(), event.getClickedBlock())) {
                 pointsCallback.remove(event.getPlayer().getUniqueId());
-                Logging.debug(this, String.format("Executed and removed point select callback with player uuid '%s'", event.getPlayer().getUniqueId().toString()));
-            } else {
-                Logging.debug(this, String.format("Executed point select callback with player uuid '%s'", event.getPlayer().getUniqueId().toString()));
             }
             event.setCancelled(true);
         }
@@ -36,9 +33,6 @@ public class PlayerController implements IPlayerController, Listener {
         if (textsCallback.containsKey(event.getPlayer().getUniqueId())) {
             if (textsCallback.get(event.getPlayer().getUniqueId()).execute(event.getPlayer(), event.getMessage())) {
                 textsCallback.remove(event.getPlayer().getUniqueId());
-                Logging.debug(this, String.format("Executed and removed text callback with player uuid '%s'", event.getPlayer().getUniqueId().toString()));
-            } else {
-                Logging.debug(this, String.format("Executed point text with player uuid '%s'", event.getPlayer().getUniqueId().toString()));
             }
             event.setCancelled(true);
         }
@@ -48,7 +42,6 @@ public class PlayerController implements IPlayerController, Listener {
     public void removeAllCallbacks(UUID uuid) {
         textsCallback.remove(uuid);
         pointsCallback.remove(uuid);
-        Logging.debug(this, String.format("Removed callbacks for player uuid '%s'", uuid.toString()));
     }
 
     @Override
@@ -58,12 +51,10 @@ public class PlayerController implements IPlayerController, Listener {
 
     public void addTextWroteCallback(UUID uuid, TextWroteCallback callback) {
         textsCallback.put(uuid, callback);
-        Logging.debug(this, String.format("New text callback with player uuid '%s'", uuid.toString()));
     }
 
     public void addPointSelectedCallback(UUID uuid, PointSelectedCallback callback) {
         pointsCallback.put(uuid, callback);
-        Logging.debug(this, String.format("New point select callback with player uuid '%s'", uuid.toString()));
     }
 
     public void reload() {

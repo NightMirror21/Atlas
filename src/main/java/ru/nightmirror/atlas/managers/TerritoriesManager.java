@@ -60,10 +60,8 @@ public class TerritoriesManager extends BaseMessages implements ITerritoryManage
     }
 
     private void processWriteNameCreateNew(Player player) {
-        Logging.debug(this, String.format("Started creating territory for player '%s'", player.getName()));
         player.sendMessage(config.getString("messages.write-name"));
         controller.addTextWroteCallback(player.getUniqueId(), (sender, name) -> {
-            Logging.debug(this, String.format("Attempting to put name '%s' of territory for player '%s'", name, player.getName()));
             if (checkCorrectNameLength(sender, name)) return false;
 
             Territory territory = new Territory();
@@ -72,7 +70,6 @@ public class TerritoriesManager extends BaseMessages implements ITerritoryManage
             territory.setName(name.trim());
 
             processing.put(player.getUniqueId(), territory);
-            Logging.debug(this, String.format("Putted name '%s' of territory for player '%s'", name, player.getName()));
             processWriteDescriptionCreateNew(player);
             return false;
         });
@@ -81,13 +78,11 @@ public class TerritoriesManager extends BaseMessages implements ITerritoryManage
     private void processWriteDescriptionCreateNew(Player player) {
         player.sendMessage(config.getString("messages.write-description"));
         controller.addTextWroteCallback(player.getUniqueId(), (sender, description) -> {
-            Logging.debug(this, String.format("Attempting to put description '%s' of territory for player '%s'", description, player.getName()));
             if (checkCorrectDescriptionLength(sender, description)) return false;
 
             Territory territory = processing.get(player.getUniqueId());
             territory.setDescription(description);
             processing.put(player.getUniqueId(), territory);
-            Logging.debug(this, String.format("Putted description '%s' of territory for player '%s'", description, player.getName()));
             processSelectPointsCreateNew(player);
             return true;
         });
@@ -111,7 +106,6 @@ public class TerritoriesManager extends BaseMessages implements ITerritoryManage
     private void processSelectPointsCreateNew(Player player) {
         player.sendMessage(config.getString("messages.mark-points"));
         controller.addPointSelectedCallback(player.getUniqueId(), (sender, block) -> {
-            Logging.debug(this, String.format("Player '%s' clicked on block with x=%d z=%d", player.getName(), block.getLocation().getBlockX(), block.getLocation().getBlockZ()));
             Territory territory = processing.get(player.getUniqueId());
             LinkedHashSet<Location> points = territory.getPoints();
             if (points == null) points = new LinkedHashSet<>();
@@ -136,8 +130,6 @@ public class TerritoriesManager extends BaseMessages implements ITerritoryManage
             territory.setPoints(points);
             processing.put(player.getUniqueId(), territory);
 
-            Logging.debug(this, String.format("Point putted to future territory '%s'", territory.getUUID().toString()));
-
             return false;
         });
     }
@@ -148,13 +140,11 @@ public class TerritoriesManager extends BaseMessages implements ITerritoryManage
             return false;
         }
 
-        Logging.debug(this, String.format("New edit name process for player '%s' and territory '%s'", player.getName(), id.toString()));
 
         try {
             Territory territory = data.queryForId(id.toString());
             player.sendMessage(config.getString("messages.write-name"));
             controller.addTextWroteCallback(player.getUniqueId(), (sender, name) -> {
-                Logging.debug(this, String.format("Attempting to set name '%s' for territory '%s'", name, id.toString()));
                 if (checkCorrectNameLength(sender, name)) return false;
 
                 try {
@@ -162,7 +152,7 @@ public class TerritoriesManager extends BaseMessages implements ITerritoryManage
                     territory.setUpdatedAt(System.currentTimeMillis());
                     data.update(territory);
                     player.sendMessage(config.getString("messages.edited-successfully"));
-                    Logging.debug(this, String.format("Setted name '%s' for territory '%s'", name, id.toString()));
+                    Logging.debug(this, String.format("Territory '%s' updated", territory.getUUID().toString()));
                 } catch (Exception exception) {
                     Logging.error(String.format("Can't update territory cause '%s'", exception.getMessage()));
                     player.sendMessage(configContainer.getBase().getString("messages.some-errors"));
@@ -183,8 +173,6 @@ public class TerritoriesManager extends BaseMessages implements ITerritoryManage
         Territory territory = processing.get(player.getUniqueId());
         if (territory.getPoints() == null || territory.getPoints().size() == 0) return false;
 
-        Logging.debug(this, String.format("Attempting to delete point x=%d z=%d for territory '%s' where owner '%s'", x, z, territory.getUUID(), player.getName()));
-
         LinkedHashSet<Location> newPoints = new LinkedHashSet<>();
         boolean deleted = false;
         for (Location point : territory.getPoints()) {
@@ -196,7 +184,6 @@ public class TerritoriesManager extends BaseMessages implements ITerritoryManage
         }
 
         if (deleted) {
-            Logging.debug(this, String.format("Removed. Point counts: %d -> %d", territory.getPoints().size(), newPoints.size()));
             territory.setPoints(newPoints);
             processing.put(player.getUniqueId(), territory);
             player.sendMessage(config.getString("messages.point-removed-response"));
@@ -300,14 +287,10 @@ public class TerritoriesManager extends BaseMessages implements ITerritoryManage
             return false;
         }
 
-        Logging.debug(this, String.format("New edit description process for player '%s' and territory '%s'", player.getName(), id.toString()));
-
         try {
             Territory territory = data.queryForId(id.toString());
             player.sendMessage(config.getString("messages.write-description"));
             controller.addTextWroteCallback(player.getUniqueId(), (sender, description) -> {
-                Logging.debug(this, String.format("Attempting to set description '%s' for territory '%s'", description, id.toString()));
-
                 if (checkCorrectDescriptionLength(sender, description)) return false;
 
                 try {
@@ -315,7 +298,7 @@ public class TerritoriesManager extends BaseMessages implements ITerritoryManage
                     territory.setUpdatedAt(System.currentTimeMillis());
                     data.update(territory);
                     player.sendMessage(config.getString("messages.edited-successfully"));
-                    Logging.debug(this, String.format("Setted description '%s' for territory '%s'", description, id.toString()));
+                    Logging.debug(this, String.format("Territory '%s' updated", territory.getUUID().toString()));
                 } catch (Exception exception) {
                     Logging.error(String.format("Can't update territory cause '%s'", exception.getMessage()));
                     player.sendMessage(configContainer.getBase().getString("messages.some-errors"));
@@ -340,7 +323,6 @@ public class TerritoriesManager extends BaseMessages implements ITerritoryManage
         boolean contains = controller.containsAnyCallback(playerUUID) || processing.containsKey(playerUUID);
         processing.remove(playerUUID);
         controller.removeAllCallbacks(playerUUID);
-        Logging.debug(this, String.format("Cancelled all for player with uuid '%s'", playerUUID.toString()));
         return contains;
     }
 
