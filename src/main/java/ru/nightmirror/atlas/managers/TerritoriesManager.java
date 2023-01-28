@@ -4,6 +4,7 @@ import com.j256.ormlite.dao.Dao;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Location;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import ru.nightmirror.atlas.commands.BaseMessages;
 import ru.nightmirror.atlas.config.Config;
@@ -16,7 +17,8 @@ import ru.nightmirror.atlas.interfaces.controllers.IPlayerController;
 import ru.nightmirror.atlas.interfaces.managers.ITerritoryManager;
 import ru.nightmirror.atlas.interfaces.managers.Manager;
 import ru.nightmirror.atlas.misc.Logging;
-import ru.nightmirror.atlas.misc.PointsConvertor;
+import ru.nightmirror.atlas.misc.convertors.PointsConvertor;
+import ru.nightmirror.atlas.misc.type.Type;
 import ru.nightmirror.atlas.models.Area;
 import ru.nightmirror.atlas.models.Point;
 
@@ -36,6 +38,7 @@ public class TerritoriesManager extends BaseMessages implements ITerritoryManage
     private Config config;
 
     private final HashMap<UUID, Territory> processing = new HashMap<>();
+    private final LinkedHashSet<Type> territoriesTypes = new LinkedHashSet<>();
 
     public TerritoriesManager(IConfigContainer configContainer, DatabaseLoader loader, PlayerController controller) {
         super(configContainer.getBase());
@@ -83,9 +86,52 @@ public class TerritoriesManager extends BaseMessages implements ITerritoryManage
             Territory territory = processing.get(player.getUniqueId());
             territory.setDescription(description);
             processing.put(player.getUniqueId(), territory);
-            processSelectPointsCreateNew(player);
+
+            processSelectType(player);
+
             return true;
         });
+    }
+
+    private void processSelectType(Player player) {
+        player.sendMessage(config.getString("messages.select-type"));
+
+        for (Type type : territoriesTypes) {
+            String name = config.getString("messages.select-type-item-button").replaceAll("%type_name%", type.getColor().getMinecraftColor() + type.getName());
+            TextComponent button = createButton(name,  config.getString("messages.select-type-item-button-hover"), ClickEvent.Action.RUN_COMMAND, ("/territory settype " + type.getName()));
+            player.spigot().sendMessage(button);
+        }
+    }
+
+    @Override
+    public void setSelectedType(Player player, String... rawType) {
+        Type type = getType(toStr(rawType));
+        if (type == null || !processing.containsKey(player.getUniqueId()))
+            return;
+
+        Territory territory = processing.get(player.getUniqueId());
+        if (territory.getType() != null) return;
+        territory.setType(type.getName());
+        processing.put(player.getUniqueId(), territory);
+        processSelectPointsCreateNew(player);
+    }
+
+    private String toStr(String[] arr) {
+        StringBuilder result = new StringBuilder();
+        for (String str : arr) {
+            result.append(str).append(" ");
+        }
+        return result.toString().trim();
+    }
+
+    @Nullable
+    @Override
+    public Type getType(String raw) {
+        for (Type type : territoriesTypes) {
+            if (type.getName().equalsIgnoreCase(raw))
+                return type;
+        }
+        return null;
     }
 
     private boolean checkCorrectDescriptionLength(Player sender, String description) {
@@ -392,13 +438,31 @@ public class TerritoriesManager extends BaseMessages implements ITerritoryManage
         data = loader.getTerritoriesTable();
         config = configContainer.getTerritories();
         Logging.debug(this, "Loaded");
+        loadTypes();
         return this;
+    }
+
+    private void loadTypes() {
+        ConfigurationSection section = config.getSection("types");
+        if (section == null) {
+            Logging.error("Can't load types of territories. Section is null");
+            return;
+        }
+
+        section.getKeys(false).forEach(key -> {
+            ConfigurationSection typeSection = section.getConfigurationSection(key);
+            Type type = new Type(typeSection.getString("name"), typeSection.getString("color"));
+            territoriesTypes.add(type);
+        });
+
+        Logging.debug(this, String.format("Loaded %d types", territoriesTypes.size()));
     }
 
     @Override
     public void stop() {
         data.clearObjectCache();
         processing.clear();
+        territoriesTypes.clear();
         data = null;
         Logging.debug(this, "Stopped");
     }

@@ -5,6 +5,17 @@ settings:
   min-symbols-description-length: 10
   max-symbols-description-length: 100
 
+types:
+  portal:
+    name: 'Portal to another dimension'
+    color: 'LIGHT_PURPLE'
+  shop:
+    name: 'Shop'
+    color: 'GOLD'
+  other:
+    name: 'Other'
+    color: 'GRAY'
+
 messages:
   errors:
     name-is-too-short: '&e[Atlas] &fName of marker is too short'
@@ -28,6 +39,9 @@ messages:
 
   write-name: '&a[Atlas] &fWrite to chat name of marker'
   write-description: '&a[Atlas] &fWrite to chat description of marker'
+  select-type: '&a[Atlas] &fChoose the type of marker:'
+  select-type-item-button: '&a- %type_name%'
+  select-type-item-button-hover: 'Click to select'
   mark-point: '&a[Atlas] &fLeft click to set marker location'
 
   created-successfully: '&a[Atlas] &fMarker created'
@@ -41,7 +55,7 @@ messages:
   list-header: '&a[Atlas] &fList of markers'
   list-is-empty: '&a[Atlas] &fList of markers is empty'
 
-  # %marker_name%; %marker_description%; %marker_owner%; %marker_updated%; %marker_created%; %marker_point%
+  # %marker_name%; %marker_description%; %marker_owner%; %marker_updated%; %marker_created%; %marker_point%; %marker_type
   list-item: '&a- &f%marker_name% &7(%marker_owner%)'
   marker-point-format: '[world: %world_name%; x: %x%; z: %z%]'
 
@@ -56,9 +70,10 @@ messages:
 
   list-page-buttons-separator: ' &f- &7%current_page%/%max_pages% &f- '
 
-  # %marker_name%; %marker_description%; %marker_owner%; %marker_updated%; %marker_created%; %marker_point%
+  # %marker_name%; %marker_description%; %marker_owner%; %marker_updated%; %marker_created%; %marker_point%; %marker_type%
   info:
     - '&a[Atlas] &f&l%marker_name%'
+    - '&a- &fType: %marker_type%'
     - '&a- &fDescription: &a%marker_description%'
     - '&a- &fPoint: &a%marker_point%'
     - '&a- &fCreated by: &a%marker_owner%'

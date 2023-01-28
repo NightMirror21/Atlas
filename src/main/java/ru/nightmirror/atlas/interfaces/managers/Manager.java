@@ -2,6 +2,7 @@ package ru.nightmirror.atlas.interfaces.managers;
 
 import org.bukkit.entity.Player;
 import ru.nightmirror.atlas.interfaces.controllers.IPlayerController;
+import ru.nightmirror.atlas.misc.type.Type;
 
 import javax.annotation.Nullable;
 import java.util.Set;
@@ -28,4 +29,8 @@ public interface Manager<T> {
     Set<T> getByOwnerUUID(UUID ownerUUID);
     Set<T> getByOwnerUUID();
     IPlayerController getPlayerController();
+    @Nullable
+    Type getType(String raw);
+
+    void setSelectedType(Player player, String... rawType);
 }

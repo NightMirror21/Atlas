@@ -44,6 +44,10 @@ public class TerritoryCommand extends BaseMessages implements TabExecutor {
         }
 
         switch (args[0]) {
+            case "settype":
+                args[0] = "";
+                manager.setSelectedType((Player) sender, args);
+                break;
             case "cancel":
                 processCancel((Player) sender);
                 break;
@@ -213,7 +217,10 @@ public class TerritoryCommand extends BaseMessages implements TabExecutor {
                 .replaceAll("%x%", String.valueOf(point.getBlockX()))
                 .replaceAll("%z%", String.valueOf(point.getBlockZ()));
 
+        String type = manager.getType(territory.getType()).getColor().getMinecraftColor() + manager.getType(territory.getType()).getName();
+
         return text.replaceAll("%territory_name%", territory.getName())
+                .replaceAll("%territory_type%", type)
                 .replaceAll("%territory_description%", territory.getDescription())
                 .replaceAll("%territory_owner%", PlayerUtils.nicknameFromUUID(UUID.fromString(territory.getOwnerUUID())))
                 .replaceAll("%territory_updated%", TimeUtils.getFormattedTime(territory.getUpdatedAt()))

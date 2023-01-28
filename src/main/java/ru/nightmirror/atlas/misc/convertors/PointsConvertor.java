@@ -1,4 +1,4 @@
-package ru.nightmirror.atlas.misc;
+package ru.nightmirror.atlas.misc.convertors;
 
 import org.bukkit.Location;
 

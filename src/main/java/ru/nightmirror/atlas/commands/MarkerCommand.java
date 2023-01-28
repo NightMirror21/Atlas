@@ -44,6 +44,10 @@ public class MarkerCommand extends BaseMessages implements TabExecutor {
         }
 
         switch (args[0]) {
+            case "settype":
+                args[0] = "";
+                manager.setSelectedType((Player) sender, args);
+                break;
             case "cancel":
                 processCancel((Player) sender);
                 break;
@@ -197,7 +201,10 @@ public class MarkerCommand extends BaseMessages implements TabExecutor {
                 .replaceAll("%x%", String.valueOf(point.getBlockX()))
                 .replaceAll("%z%", String.valueOf(point.getBlockZ()));
 
+        String type = manager.getType(marker.getType()).getColor().getMinecraftColor() + manager.getType(marker.getType()).getName();
+
         return text.replaceAll("%marker_name%", marker.getName())
+                .replaceAll("%marker_type%", type)
                 .replaceAll("%marker_description%", marker.getDescription())
                 .replaceAll("%marker_point%", pointFormatted)
                 .replaceAll("%marker_owner%", PlayerUtils.nicknameFromUUID(UUID.fromString(marker.getOwnerUUID())))

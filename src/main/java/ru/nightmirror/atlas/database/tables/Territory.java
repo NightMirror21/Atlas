@@ -40,6 +40,9 @@ public class Territory {
     @DatabaseField(columnName = "updated_at")
     private Long updatedAt;
 
+    @DatabaseField
+    private String type;
+
     public boolean isReadyToCreate() {
         return ownerUUID != null && name != null && description != null && serializedPoints != null;
     }

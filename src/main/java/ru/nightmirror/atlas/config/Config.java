@@ -1,8 +1,9 @@
 package ru.nightmirror.atlas.config;
 
 import lombok.RequiredArgsConstructor;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
-import ru.nightmirror.atlas.misc.ColorsConvertor;
+import ru.nightmirror.atlas.misc.convertors.ColorsConvertor;
 
 import java.util.List;
 
@@ -37,5 +38,9 @@ public class Config {
 
     public List<String> getList(String path) {
         return ColorsConvertor.convert(config.getStringList(path));
+    }
+
+    public ConfigurationSection getSection(String path) {
+        return config.getConfigurationSection(path);
     }
 }

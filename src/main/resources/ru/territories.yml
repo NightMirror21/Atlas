@@ -6,6 +6,16 @@ settings:
   max-symbols-description-length: 100
   can-intersect-other-territories: false
 
+types:
+  private:
+    name: 'Приватная территория'
+    color: 'RED'
+  public-farm:
+    name: 'Общественная ферма'
+    color: 'AQUA'
+  residential:
+    name: 'Жилая зона'
+    color: 'GREEN'
 
 messages:
   errors:
@@ -33,6 +43,9 @@ messages:
 
   write-name: '&a[Atlas] &fНапишите в чат название территории'
   write-description: '&a[Atlas] &fНапишите в чат описание территории'
+  select-type: '&a[Atlas] &fВыберите тип территории:'
+  select-type-item-button: '&a- %type_name%'
+  select-type-item-button-hover: 'Кликните чтобы выбрать'
   mark-points: '&a[Atlas] &fВыделите границу вашей территории (от 2х точек). После введите команду ещё раз'
 
   point-marked: '&8#%number% &fОтмечена'
@@ -51,7 +64,7 @@ messages:
   list-header: '&a[Atlas] Список территорий'
   list-is-empty: '&a[Atlas] &fСписок территорий пуст'
 
-  # %territory_name%; %territory_description%; %territory_owner%; %territory_updated%; %territory_created%; %territory_point%
+  # %territory_name%; %territory_description%; %territory_owner%; %territory_updated%; %territory_created%; %territory_point%; %territory_type%
   list-item: '&a- &f%territory_name% &7(%territory_owner%)'
   territory-point-format: '[мир: %world_name%; x: %x%; z: %z%]'
 
@@ -66,9 +79,10 @@ messages:
 
   list-page-buttons-separator: ' &f- &7%current_page%/%max_pages% &f- '
 
-  # %territory_name%; %territory_description%; %territory_owner%; %territory_updated%; %territory_created%; %territory_point%
+  # %territory_name%; %territory_description%; %territory_owner%; %territory_updated%; %territory_created%; %territory_point%; %territory_type%
   info:
     - '&a[Atlas] &f&l%territory_name%'
+    - '&a- &fТип: %territory_type%'
     - '&a- &fОписание: &a%territory_description%'
     - '&a- &fАвтор: &a%territory_owner%'
     - '&a- &fОдна из точек: &a%territory_point%'

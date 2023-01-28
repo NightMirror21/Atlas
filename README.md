@@ -4,7 +4,7 @@ You will be surprised how convenient it is.
 
 ## TODO
 - [ ] Soft-depend with dynmap
-- [ ] Types like 'building zone', 'event place'
+- [x] Types like 'building zone', 'event place'
 - [ ] Checking the occupancy of the territory in real time with output to the action bar
 - [ ] More information about the intersection
 - [ ] API

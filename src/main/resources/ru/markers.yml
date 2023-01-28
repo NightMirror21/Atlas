@@ -5,6 +5,17 @@ settings:
   min-symbols-description-length: 10
   max-symbols-description-length: 100
 
+types:
+  portal:
+    name: 'Портал в другое измерение'
+    color: 'LIGHT_PURPLE'
+  shop:
+    name: 'Магазин'
+    color: 'GOLD'
+  other:
+    name: 'Другое'
+    color: 'GRAY'
+
 messages:
   errors:
     name-is-too-short: '&e[Atlas] &fНазвание маркера слишком короткое'
@@ -28,6 +39,9 @@ messages:
 
   write-name: '&a[Atlas] &fНапишите в чат название маркера'
   write-description: '&a[Atlas] &fНапишите в чат описание для маркера'
+  select-type: '&a[Atlas] &fВыберите тип маркера:'
+  select-type-item-button: '&a- %type_name%'
+  select-type-item-button-hover: 'Кликните чтобы выбрать'
   mark-point: '&a[Atlas] &fОтметьте положение маркера с помощью лкм. по блоку'
 
   created-successfully: '&a[Atlas] &fМаркер создан'
@@ -41,7 +55,7 @@ messages:
   list-header: '&a[Atlas] &fСписок маркеров'
   list-is-empty: '&a[Atlas] &fСписок маркеров пуст'
 
-  # %marker_name%; %marker_description%; %marker_owner%; %marker_updated%; %marker_created%; %marker_point%
+  # %marker_name%; %marker_description%; %marker_owner%; %marker_updated%; %marker_created%; %marker_point%; %marker_type%
   list-item: '&a- &f%marker_name% &7(%marker_owner%)'
   marker-point-format: '[мир: %world_name%; x: %x%; z: %z%]'
 
@@ -56,9 +70,10 @@ messages:
 
   list-page-buttons-separator: ' &f- &7%current_page%/%max_pages% &f- '
 
-  # %marker_name%; %marker_description%; %marker_owner%; %marker_updated%; %marker_created%; %marker_point%
+  # %marker_name%; %marker_description%; %marker_owner%; %marker_updated%; %marker_created%; %marker_point%; %marker_type%
   info:
     - '&a[Atlas] &f&l%marker_name%'
+    - '&a- &fТип: %marker_type%'
     - '&a- &fОписание: &a%marker_description%'
     - '&a- &fТочка: &a%marker_point%'
     - '&a- &fАвтор: &a%marker_owner%'
