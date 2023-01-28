@@ -48,7 +48,8 @@ messages:
   select-type-item-button-hover: 'Click to select'
   mark-points: '&a[Atlas] &fMark points of your territory by left click. When there are enough of them, enter the command again'
 
-  point-marked: '&8#%number% &fMarked'
+  point-marked: '&8#%number% &fMarked %point_info%'
+  point-info-format: '&7(world: %world_name%; x: %x%; z: %z%)'
   point-remove-button: '&7[✕]'
   point-remove-button-hover: '&7Click here to delete this point'
   point-removed-response: '&a[Atlas] &fDeleted'

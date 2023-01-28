@@ -166,7 +166,15 @@ public class TerritoriesManager extends BaseMessages implements ITerritoryManage
             }
 
             // Sending message
-            TextComponent pointMessage = new TextComponent(config.getString("messages.point-marked").replaceAll("%number%", String.valueOf(points.size()+1)) + " ");
+            String pointInfo = config.getString("messages.point-info-format")
+                    .replaceAll("%world_name%", block.getLocation().getWorld().getName())
+                    .replaceAll("%x%", String.valueOf(block.getLocation().getBlockX()))
+                    .replaceAll("%z%", String.valueOf(block.getLocation().getBlockZ()));
+            String pointMarkedText = config.getString("messages.point-marked")
+                    .replaceAll("%number%", String.valueOf(points.size()+1))
+                    .replaceAll("%point_info%", pointInfo)
+                    + " ";
+            TextComponent pointMessage = new TextComponent(pointMarkedText);
             TextComponent deleteButton = createButton(config.getString("messages.point-remove-button"), config.getString("messages.point-remove-button-hover"), ClickEvent.Action.RUN_COMMAND, String.format("/territory delete_point %d %d", block.getLocation().getBlockX(), block.getLocation().getBlockZ()));
             pointMessage.addExtra(deleteButton);
             player.spigot().sendMessage(pointMessage);

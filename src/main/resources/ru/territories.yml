@@ -48,7 +48,8 @@ messages:
   select-type-item-button-hover: 'Кликните чтобы выбрать'
   mark-points: '&a[Atlas] &fВыделите границу вашей территории (от 2х точек). После введите команду ещё раз'
 
-  point-marked: '&8#%number% &fОтмечена'
+  point-marked: '&8#%number% &fОтмечена %point_info%'
+  point-info-format: '&7(мир: %world_name%; x: %x%; z: %z%)'
   point-remove-button: '&7[✕]'
   point-remove-button-hover: '&7Кликните чтобы удалить'
   point-removed-response: '&a[Atlas] &fУдалено'
