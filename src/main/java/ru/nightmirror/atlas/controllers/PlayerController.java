@@ -3,7 +3,7 @@ package ru.nightmirror.atlas.controllers;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import ru.nightmirror.atlas.interfaces.controllers.IPlayerController;
 import ru.nightmirror.atlas.interfaces.controllers.callbacks.PointSelectedCallback;
@@ -29,7 +29,7 @@ public class PlayerController implements IPlayerController, Listener {
     }
 
     @EventHandler
-    private void onText(AsyncPlayerChatEvent event) {
+    private void onText(PlayerChatEvent event) {
         if (textsCallback.containsKey(event.getPlayer().getUniqueId())) {
             if (textsCallback.get(event.getPlayer().getUniqueId()).execute(event.getPlayer(), event.getMessage())) {
                 textsCallback.remove(event.getPlayer().getUniqueId());

@@ -4,6 +4,8 @@ version: 1.0
 author: NightMirror
 description: Manager of markers and territories
 api-version: 1.16
+softdepend:
+  - dynmap
 commands:
   atlas:
     aliases: [atl]

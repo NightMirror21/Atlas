@@ -6,6 +6,8 @@ settings:
   max-symbols-description-length: 100
   can-intersect-other-territories: false
 
+list-dynmap-name: 'Территории'
+
 types:
   private:
     name: 'Приватная территория'
@@ -95,3 +97,9 @@ messages:
 
   remove-button: '&7[Удалить]'
   remove-button-hover: 'Кликните чтобы удалить'
+
+  edit-name-button: '&7[Изменить Название]'
+  edit-name-button-hover: 'Кликните чтобы изменить название'
+
+  edit-description-button: '&7[Изменить Описание]'
+  edit-description-button-hover: 'Кликните чтобы изменить описание'

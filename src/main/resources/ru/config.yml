@@ -12,17 +12,20 @@ database:
 
 messages:
   plugin-reloaded-success: '&a[Atlas] &fПлагин успешно перезагружен'
-  some-errors: '&a[Atlas] &fВозникла ошибка при выполнении'
+  some-errors: '&c[Atlas] &fВозникла ошибка при выполнении'
   plugin-reloaded-not-success: '&c[Atlas] &fПлагин перезагрузился не успешно, он будет остановлен'
   not-permission: '&c[Atlas] &fУ вас нет прав на это'
   only-for-players: '&c[Atlas] &fДанная команда только для игроков'
   no-enough-arguments: '&c[Atlas] &fНедостаточно аргументов'
   argument-incorrect: '&c[Atlas] &fАргумент(ы) неверные'
   not-a-number: '&e[Atlas] &f%value% не является числом'
+  dynmap-not-hooked: '&a[Atlas] &fНе подключен'
+  dynmap-reload-success: '&a[Atlas] &fОбъекты обновлены'
 
   help:
     - '&a[Atlas] v.%plugin_version%'
     - '/atlas reload &7- перезагрузить плагин'
+    - '/atlas dynmap &7- обновить объекты на dynmap (если подключён)'
     - '/atlas stats &7- статистика плагина'
     - '/marker help &7- помощь по маркерам'
     - '/mark &7- псевдоним /mark'

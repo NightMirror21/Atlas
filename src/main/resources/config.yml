@@ -12,17 +12,20 @@ database:
 
 messages:
   plugin-reloaded-success: '&a[Atlas] &fPlugin reloaded successful'
-  some-errors: '&a[Atlas] &fSome problems have occurred'
+  some-errors: '&c[Atlas] &fSome problems have occurred'
   plugin-reloaded-not-success: '&c[Atlas] &fPlugin reloaded not successful. He will be stopped'
   not-permission: '&c[Atlas] &fYou do not have permission'
   only-for-players: '&c[Atlas] &fThis command only for players'
   no-enough-arguments: '&c[Atlas] &fNo enough arguments'
   argument-incorrect: '&c[Atlas] &fArgument(s) incorrect'
   not-a-number: '&e[Atlas] &f%value% is not number'
+  dynmap-not-hooked: '&a[Atlas] &fDynMap not hooked'
+  dynmap-reload-success: '&a[Atlas] &fObjects refreshed'
 
   help:
     - '&a[Atlas] v.%plugin_version%'
     - '/atlas reload &7- reload plugin'
+    - '/atlas dynmap &7- refresh objects on dynmap (if connected)'
     - '/atlas stats &7- plugin statistics'
     - '/marker help &7- help for markers'
     - '/mark &7- shortcut for /mark'

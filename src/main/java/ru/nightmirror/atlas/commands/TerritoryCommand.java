@@ -110,17 +110,17 @@ public class TerritoryCommand extends BaseMessages implements TabExecutor {
 
         switch (args[1]) {
             case "own":
-                sendListPage(player, new ArrayList<>(manager.getByOwnerUUID(player.getUniqueId())), page, "own");
+                sendListPage(player, new ArrayList<>(manager.getByOwner(player.getUniqueId())), page, "own");
                 break;
             case "all":
-                sendListPage(player, new ArrayList<>(manager.getByOwnerUUID()), page, "all");
+                sendListPage(player, new ArrayList<>(manager.getAll()), page, "all");
                 break;
             default:
                 UUID playerUUID = PlayerUtils.uuidFromNickname(args[1]);
                 if (playerUUID == null) {
                     sendListPage(player, List.of(), page, "");
                 } else {
-                    sendListPage(player, new ArrayList<>(manager.getByOwnerUUID(playerUUID)), page, args[1]);
+                    sendListPage(player, new ArrayList<>(manager.getByOwner(playerUUID)), page, args[1]);
                 }
         }
     }
@@ -167,7 +167,7 @@ public class TerritoryCommand extends BaseMessages implements TabExecutor {
             return;
         }
 
-        if (manager.getByOwnerUUID(player.getUniqueId()).size() >= config.getInt("settings.maximum-per-player")) {
+        if (manager.getByOwner(player.getUniqueId()).size() >= config.getInt("settings.maximum-per-player")) {
             player.sendMessage(config.getString("messages.errors.limit-is-reached"));
             return;
         }
@@ -205,6 +205,10 @@ public class TerritoryCommand extends BaseMessages implements TabExecutor {
 
         if (hasPermissionWithoutMessage(player, "territory.admin") || manager.isOwner(player.getUniqueId(), uuid)) {
             bottom.addExtra(createButton(config.getString("messages.remove-button"), config.getString("messages.remove-button-hover"), ClickEvent.Action.SUGGEST_COMMAND, "/territory remove " + uuid.toString()));
+            player.spigot().sendMessage(bottom);
+
+            bottom = createButton(config.getString("messages.edit-name-button") + " ", config.getString("messages.edit-name-button-hover"), ClickEvent.Action.RUN_COMMAND, "/territory edit " + uuid.toString() + " name");
+            bottom.addExtra(createButton(config.getString("messages.edit-description-button") + " ", config.getString("messages.edit-description-button-hover"), ClickEvent.Action.RUN_COMMAND, "/territory edit " + uuid.toString() + " desc"));
         }
 
         player.spigot().sendMessage(bottom);
@@ -229,7 +233,7 @@ public class TerritoryCommand extends BaseMessages implements TabExecutor {
     }
 
     private void processRemove(Player player, String[] args) {
-        if (args.length < 3) {
+        if (args.length < 2) {
             player.sendMessage(baseConfig.getString("messages.no-enough-arguments"));
             return;
         }
@@ -266,7 +270,7 @@ public class TerritoryCommand extends BaseMessages implements TabExecutor {
             return;
         }
 
-        if (manager.getByOwnerUUID(player.getUniqueId()).size() == 0) {
+        if (manager.getByOwner(player.getUniqueId()).size() == 0) {
             player.sendMessage(config.getString("messages.errors.no-have-territories"));
             return;
         }
@@ -318,14 +322,14 @@ public class TerritoryCommand extends BaseMessages implements TabExecutor {
                     strings.addAll(List.of("own", "all"));
                     break;
                 case "info":
-                    strings.addAll(manager.getByOwnerUUID().stream().map(Territory::getUUID).collect(Collectors.toList()));
+                    strings.addAll(manager.getAll().stream().map(Territory::getUUID).collect(Collectors.toList()));
                     break;
                 case "remove":
                 case "edit":
                     if (hasPermissionWithoutMessage(sender, "territory.admin")) {
-                        strings.addAll(manager.getByOwnerUUID().stream().map(Territory::getUUID).collect(Collectors.toList()));
+                        strings.addAll(manager.getAll().stream().map(Territory::getUUID).collect(Collectors.toList()));
                     } else {
-                        strings.addAll(manager.getByOwnerUUID(((Player) sender).getUniqueId()).stream().map(Territory::getUUID).collect(Collectors.toList()));
+                        strings.addAll(manager.getByOwner(((Player) sender).getUniqueId()).stream().map(Territory::getUUID).collect(Collectors.toList()));
                     }
                     break;
             }

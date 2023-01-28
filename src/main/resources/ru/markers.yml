@@ -5,6 +5,8 @@ settings:
   min-symbols-description-length: 10
   max-symbols-description-length: 100
 
+list-dynmap-name: 'Маркеры'
+
 types:
   portal:
     name: 'Портал в другое измерение'
@@ -86,6 +88,8 @@ messages:
   remove-button: '&7[Remove]'
   remove-button-hover: 'Кликните для отмены'
 
+  edit-name-button: '&7[Изменить Название]'
+  edit-name-button-hover: 'Кликните чтобы изменить название'
 
-
-
+  edit-description-button: '&7[Изменить Описание]'
+  edit-description-button-hover: 'Кликните чтобы изменить описание'

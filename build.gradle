@@ -4,13 +4,18 @@ plugins {
 }
 
 group 'ru.nightmirror'
-version '1.0-SNAPSHOT'
+version '1.0'
 
 repositories {
     mavenCentral()
 
     maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
+
+    // Spigot
     maven { url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
+
+    // DynMap
+    maven { url 'https://repo.mikeprimm.com' }
 }
 
 dependencies {
@@ -24,6 +29,8 @@ dependencies {
 
     compileOnly 'org.projectlombok:lombok:1.18.24'
     annotationProcessor 'org.projectlombok:lombok:1.18.24'
+
+    compileOnly 'us.dynmap:dynmap-api:3.2-beta-1'
 }
 
 test {

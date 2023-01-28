@@ -3,8 +3,12 @@ package ru.nightmirror.atlas.managers;
 import com.j256.ormlite.dao.Dao;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
+import ru.nightmirror.atlas.api.MarkerCreatedEvent;
+import ru.nightmirror.atlas.api.MarkerDeletedEvent;
+import ru.nightmirror.atlas.api.MarkerUpdatedEvent;
 import ru.nightmirror.atlas.commands.BaseMessages;
 import ru.nightmirror.atlas.config.Config;
 import ru.nightmirror.atlas.controllers.PlayerController;
@@ -96,6 +100,26 @@ public class MarkersManager extends BaseMessages implements IMarkersManager {
     }
 
     @Override
+    public boolean update(Marker value) {
+        try {
+            if (isExists(UUID.fromString(value.getUUID()))) {
+                MarkerUpdatedEvent event = new MarkerUpdatedEvent(value, true);
+                Bukkit.getPluginManager().callEvent(event);
+                if (event.isCancelled()) {
+                    return false;
+                }
+
+                data.update(value);
+                Logging.debug(this, String.format("Marker '%s' updated", value.getUUID().toString()));
+                return true;
+            }
+        } catch (Exception exception) {
+            Logging.error(String.format("Can't update marker cause '%s'", exception.getMessage()));
+        }
+        return false;
+    }
+
+    @Override
     public void setSelectedType(Player player, String... rawType) {
         Type type = getType(toStr(rawType));
         if (type == null || !processing.containsKey(player.getUniqueId()))
@@ -150,7 +174,13 @@ public class MarkersManager extends BaseMessages implements IMarkersManager {
             marker.setCreatedAt(System.currentTimeMillis());
             marker.setUpdatedAt(System.currentTimeMillis());
             try {
-                data.createIfNotExists(marker);
+                MarkerCreatedEvent event = new MarkerCreatedEvent(marker, true);
+                Bukkit.getPluginManager().callEvent(event);
+                if (event.isCancelled()) {
+                    return true;
+                }
+
+                data.create(marker);
                 player.sendMessage(config.getString("messages.created-successfully"));
                 Logging.debug(this, String.format("Marker '%s' created", marker.getUUID().toString()));
             } catch (Exception exception) {
@@ -174,14 +204,11 @@ public class MarkersManager extends BaseMessages implements IMarkersManager {
             controller.addTextWroteCallback(player.getUniqueId(), (sender, name) -> {
                 if (checkCorrectNameLength(sender, name)) return false;
 
-                try {
-                    marker.setName(name);
-                    marker.setUpdatedAt(System.currentTimeMillis());
-                    data.update(marker);
+                marker.setName(name);
+                marker.setUpdatedAt(System.currentTimeMillis());
+                if (update(marker)) {
                     player.sendMessage(config.getString("messages.edited-successfully"));
-                    Logging.debug(this, String.format("Marker '%s' updated", marker.getUUID().toString()));
-                } catch (Exception exception) {
-                    Logging.error(String.format("Can't update marker cause '%s'", exception.getMessage()));
+                } else {
                     player.sendMessage(configContainer.getBase().getString("messages.some-errors"));
                 }
                 return true;
@@ -215,6 +242,12 @@ public class MarkersManager extends BaseMessages implements IMarkersManager {
         }
 
         try {
+            MarkerDeletedEvent event = new MarkerDeletedEvent(getById(id), true);
+            Bukkit.getPluginManager().callEvent(event);
+            if (event.isCancelled()) {
+                return false;
+            }
+
             data.deleteById(id.toString());
             Logging.debug(this, String.format("Marker '%s' deleted", id.toString()));
             return true;
@@ -235,15 +268,12 @@ public class MarkersManager extends BaseMessages implements IMarkersManager {
             player.sendMessage(config.getString("messages.write-description"));
             controller.addTextWroteCallback(player.getUniqueId(), (sender, description) -> {
                 if (checkCorrectDescriptionLength(sender, description)) return false;
+                marker.setDescription(description);
+                marker.setUpdatedAt(System.currentTimeMillis());
 
-                try {
-                    marker.setDescription(description);
-                    marker.setUpdatedAt(System.currentTimeMillis());
-                    data.update(marker);
+                if (update(marker)) {
                     player.sendMessage(config.getString("messages.edited-successfully"));
-                    Logging.debug(this, String.format("Marker '%s' updated", marker.getUUID().toString()));
-                } catch (Exception exception) {
-                    Logging.error(String.format("Can't update marker cause '%s'", exception.getMessage()));
+                } else {
                     player.sendMessage(configContainer.getBase().getString("messages.some-errors"));
                 }
                 return true;
@@ -309,7 +339,7 @@ public class MarkersManager extends BaseMessages implements IMarkersManager {
     }
 
     @Override
-    public Set<Marker> getByOwnerUUID(UUID ownerUUID) {
+    public Set<Marker> getByOwner(UUID ownerUUID) {
         try {
             return new HashSet<>(data.queryForEq("owner_uuid", ownerUUID.toString()));
         } catch (Exception exception) {
@@ -320,7 +350,7 @@ public class MarkersManager extends BaseMessages implements IMarkersManager {
     }
 
     @Override
-    public Set<Marker> getByOwnerUUID() {
+    public Set<Marker> getAll() {
         try {
             return new HashSet<>(data.queryForAll());
         } catch (Exception exception) {

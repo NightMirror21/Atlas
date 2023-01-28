@@ -5,6 +5,8 @@ settings:
   min-symbols-description-length: 10
   max-symbols-description-length: 100
 
+list-dynmap-name: 'Markers'
+
 types:
   portal:
     name: 'Portal to another dimension'
@@ -86,6 +88,8 @@ messages:
   remove-button: '&7[Remove]'
   remove-button-hover: 'Click here to remove marker'
 
+  edit-name-button: '&7[Edit Name]'
+  edit-name-button-hover: 'Click here to edit description marker'
 
-
-
+  edit-description-button: '&7[Edit Description]'
+  edit-description-button-hover: 'Click here to edit name marker'

@@ -3,9 +3,13 @@ package ru.nightmirror.atlas.managers;
 import com.j256.ormlite.dao.Dao;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
+import ru.nightmirror.atlas.api.TerritoryCreatedEvent;
+import ru.nightmirror.atlas.api.TerritoryDeletedEvent;
+import ru.nightmirror.atlas.api.TerritoryUpdatedEvent;
 import ru.nightmirror.atlas.commands.BaseMessages;
 import ru.nightmirror.atlas.config.Config;
 import ru.nightmirror.atlas.controllers.PlayerController;
@@ -200,17 +204,15 @@ public class TerritoriesManager extends BaseMessages implements ITerritoryManage
             player.sendMessage(config.getString("messages.write-name"));
             controller.addTextWroteCallback(player.getUniqueId(), (sender, name) -> {
                 if (checkCorrectNameLength(sender, name)) return false;
+                territory.setName(name);
+                territory.setUpdatedAt(System.currentTimeMillis());
 
-                try {
-                    territory.setName(name);
-                    territory.setUpdatedAt(System.currentTimeMillis());
-                    data.update(territory);
+                if (update(territory)) {
                     player.sendMessage(config.getString("messages.edited-successfully"));
-                    Logging.debug(this, String.format("Territory '%s' updated", territory.getUUID().toString()));
-                } catch (Exception exception) {
-                    Logging.error(String.format("Can't update territory cause '%s'", exception.getMessage()));
+                } else {
                     player.sendMessage(configContainer.getBase().getString("messages.some-errors"));
                 }
+
                 return true;
             });
             return true;
@@ -271,10 +273,17 @@ public class TerritoriesManager extends BaseMessages implements ITerritoryManage
         territory.setPoints(points);
 
         try {
+            cancel(player.getUniqueId());
+            TerritoryCreatedEvent event = new TerritoryCreatedEvent(territory, true);
+            Bukkit.getPluginManager().callEvent(event);
+
+            if (event.isCancelled()) {
+                return true;
+            }
+
             data.create(territory);
             Logging.debug(this, String.format("Territory '%s' created", territory.getUUID().toString()));
             player.sendMessage(config.getString("messages.created-successfully"));
-            cancel(player.getUniqueId());
         } catch (Exception exception) {
             Logging.error(String.format("Can't create territory cause '%s'", exception.getMessage()));
             player.sendMessage(configContainer.getBase().getString("messages.some-errors"));
@@ -304,6 +313,26 @@ public class TerritoriesManager extends BaseMessages implements ITerritoryManage
         return isIntersect.get();
     }
 
+    @Override
+    public boolean update(Territory value) {
+        try {
+            if (isExists(UUID.fromString(value.getUUID()))) {
+                TerritoryUpdatedEvent event = new TerritoryUpdatedEvent(value, true);
+                Bukkit.getPluginManager().callEvent(event);
+                if (event.isCancelled()) {
+                    return false;
+                }
+
+                data.update(value);
+                Logging.debug(this, String.format("Territory '%s' updated", value.getUUID().toString()));
+                return true;
+            }
+        } catch (Exception exception) {
+            Logging.error(String.format("Can't update territory cause '%s'", exception.getMessage()));
+        }
+        return false;
+    }
+
     private boolean checkCorrectNameLength(Player sender, String name) {
         if (name.length() < config.getInt("settings.min-symbols-name-length")) {
             sender.sendMessage(config.getString("messages.errors.name-is-too-short"));
@@ -326,6 +355,13 @@ public class TerritoriesManager extends BaseMessages implements ITerritoryManage
         }
 
         try {
+            TerritoryDeletedEvent event = new TerritoryDeletedEvent(getById(id), true);
+            Bukkit.getPluginManager().callEvent(event);
+
+            if (event.isCancelled()) {
+                return false;
+            }
+
             data.deleteById(id.toString());
             Logging.debug(this, String.format("Territory '%s' deleted", id.toString()));
             return true;
@@ -346,15 +382,12 @@ public class TerritoriesManager extends BaseMessages implements ITerritoryManage
             player.sendMessage(config.getString("messages.write-description"));
             controller.addTextWroteCallback(player.getUniqueId(), (sender, description) -> {
                 if (checkCorrectDescriptionLength(sender, description)) return false;
+                territory.setDescription(description);
+                territory.setUpdatedAt(System.currentTimeMillis());
 
-                try {
-                    territory.setDescription(description);
-                    territory.setUpdatedAt(System.currentTimeMillis());
-                    data.update(territory);
+                if (update(territory)) {
                     player.sendMessage(config.getString("messages.edited-successfully"));
-                    Logging.debug(this, String.format("Territory '%s' updated", territory.getUUID().toString()));
-                } catch (Exception exception) {
-                    Logging.error(String.format("Can't update territory cause '%s'", exception.getMessage()));
+                } else {
                     player.sendMessage(configContainer.getBase().getString("messages.some-errors"));
                 }
                 return true;
@@ -420,7 +453,7 @@ public class TerritoriesManager extends BaseMessages implements ITerritoryManage
     }
 
     @Override
-    public Set<Territory> getByOwnerUUID(UUID ownerUUID) {
+    public Set<Territory> getByOwner(UUID ownerUUID) {
         try {
             return new HashSet<>(data.queryForEq("owner_uuid", ownerUUID.toString()));
         } catch (Exception exception) {
@@ -431,7 +464,7 @@ public class TerritoriesManager extends BaseMessages implements ITerritoryManage
     }
 
     @Override
-    public Set<Territory> getByOwnerUUID() {
+    public Set<Territory> getAll() {
         try {
             return new HashSet<>(data.queryForAll());
         } catch (Exception exception) {

@@ -6,6 +6,8 @@ settings:
   max-symbols-description-length: 100
   can-intersect-other-territories: false
 
+list-dynmap-name: 'Territories'
+
 types:
   private:
     name: 'Private territory'
@@ -95,3 +97,9 @@ messages:
 
   remove-button: '&7[Remove]'
   remove-button-hover: 'Click here to remove territory'
+
+  edit-name-button: '&7[Edit Name]'
+  edit-name-button-hover: 'Click here to edit name'
+
+  edit-description-button: '&7[Edit Description]'
+  edit-description-button-hover: 'Click here to edit description'

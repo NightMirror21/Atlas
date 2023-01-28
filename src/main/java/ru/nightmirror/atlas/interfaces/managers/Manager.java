@@ -26,9 +26,10 @@ public interface Manager<T> {
 
     @Nullable
     T getById(UUID id);
-    Set<T> getByOwnerUUID(UUID ownerUUID);
-    Set<T> getByOwnerUUID();
+    Set<T> getByOwner(UUID ownerUUID);
+    Set<T> getAll();
     IPlayerController getPlayerController();
+    boolean update(T value);
     @Nullable
     Type getType(String raw);
 
