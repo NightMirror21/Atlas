@@ -14,6 +14,7 @@ import ru.nightmirror.atlas.database.DatabaseLoader;
 import ru.nightmirror.atlas.database.tables.Marker;
 import ru.nightmirror.atlas.database.tables.Territory;
 import ru.nightmirror.atlas.hooks.DynMap;
+import ru.nightmirror.atlas.hooks.Metrics;
 import ru.nightmirror.atlas.interfaces.IAtlas;
 import ru.nightmirror.atlas.interfaces.api.AtlasAPI;
 import ru.nightmirror.atlas.interfaces.config.IConfigContainer;
@@ -59,15 +60,21 @@ public class Atlas extends JavaPlugin implements IAtlas, AtlasAPI {
         registerCommands();
         checkDynmap();
 
+        try {
+            new Metrics(this, 17576);
+        } catch (Exception exception) {
+            Logging.warn("Can't load metrics cause: " + exception.getMessage());
+        }
+
         Logging.info("Enabled");
     }
 
     private void checkDynmap() {
         if (getServer().getPluginManager().isPluginEnabled("dynmap")) {
             dynMap = new DynMap(getServer().getPluginManager().getPlugin("dynmap"), this);
-            Logging.info("Hooked with Dynmap");
+            Logging.info("Hooked with DynMap");
         } else {
-            Logging.info("Dynmap not found. Continue");
+            Logging.info("DynMap not found. Continue");
         }
     }
 
