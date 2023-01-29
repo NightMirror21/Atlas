@@ -4,7 +4,7 @@ A totally unique plugin for minecraft's servers for creating territories and mar
 You will be surprised how convenient it is.
 
 [![Build Status](https://jenkins.bofcity.ru/job/Diverse%20-%20Atlas%20plugin/badge/icon)](https://jenkins.bofcity.ru/job/Diverse%20-%20Atlas%20plugin/)\
-[Download Latest Build](http://jenkins.bofcity.ru/job/Diverse - Atlas plugin/)
+[Download The Latest Build](https://jenkins.bofcity.ru/job/Diverse%20-%20Atlas%20plugin/)
 
 ## TODO
 - [x] Soft-depend with dynmap
