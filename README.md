@@ -1,7 +1,9 @@
 # Atlas
+
 A totally unique plugin for minecraft's servers for creating territories and markers.
 You will be surprised how convenient it is.
 
+[![Build Status](https://jenkins.bofcity.ru/job/Diverse%20-%20Atlas%20plugin/badge/icon)](https://jenkins.bofcity.ru/job/Diverse%20-%20Atlas%20plugin/)
 ## TODO
 - [x] Soft-depend with dynmap
 - [x] Types like 'building zone', 'event place'
